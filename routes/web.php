@@ -33,3 +33,5 @@ Route::put('/category/{category}', [CategoryController::class, 'update'])->name(
 Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
 Route::get('/post', [PostController::class, 'index'])->name('post.index');
+Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+Route::post('/post', [PostController::class, 'create'])->name('post.store');

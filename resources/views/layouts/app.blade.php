@@ -21,17 +21,18 @@
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="{{url('assets/css/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url('assets/css/bootstrap/css/bootstrap.min.css') }}">
     <!-- waves.css -->
-    <link rel="stylesheet" href="{{url('assets/pages/waves/css/waves.min.css')}}" type="text/css" media="all">
+    <link rel="stylesheet" href="{{ url('assets/pages/waves/css/waves.min.css') }}" type="text/css" media="all">
     <!-- themify-icons line icon -->
-    <link rel="stylesheet" type="text/css" href="{{url('assets/icon/themify-icons/themify-icons.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url('assets/icon/themify-icons/themify-icons.css') }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" type="text/css" href="{{url('assets/icon/font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url('assets/icon/font-awesome/css/font-awesome.min.css') }}">
     <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="{{url('assets/css/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('assets/css/jquery.mCustomScrollbar.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url('assets/css/jquery.mCustomScrollbar.css') }}">
     <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet">
+    <link type="text/css" href="{{url('assets/plugin/summernote.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -110,7 +111,7 @@
                             </div>
                         </div>
                         <a href="index.html">
-                            <img class="img-fluid" src="{{url('assets/images/logo.png')}}" alt="Theme-Logo" />
+                            <img class="img-fluid" src="{{ url('assets/images/logo.png') }}" alt="Theme-Logo" />
                         </a>
                         <a class="mobile-options waves-effect waves-light">
                             <i class="ti-more"></i>
@@ -145,7 +146,8 @@
                                     <li class="waves-effect waves-light">
                                         <div class="media">
                                             <img class="d-flex align-self-center img-radius"
-                                                src="{{url('assets/images/avatar-2.jpg')}}" alt="Generic placeholder image">
+                                                src="{{ url('assets/images/avatar-2.jpg') }}"
+                                                alt="Generic placeholder image">
                                             <div class="media-body">
                                                 <h5 class="notification-user">John Doe</h5>
                                                 <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
@@ -159,9 +161,9 @@
                             </li>
                             <li class="user-profile header-notification">
                                 <a href="#!" class="waves-effect waves-light">
-                                    <img src="{{url('assets/images/avatar-4.jpg')}}" class="img-radius"
+                                    <img src="{{ url('assets/images/avatar-4.jpg') }}" class="img-radius"
                                         alt="User-Profile-Image">
-                                    <span>{{Auth::user()->name}}</span>
+                                    <span>{{ Auth::user()->name }}</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
                                 <ul class="show-notification profile-notification">
@@ -214,10 +216,11 @@
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="">
                                 <div class="main-menu-header">
-                                    <img class="img-80 img-radius" src="{{url('assets/images/avatar-4.jpg')}}"
+                                    <img class="img-80 img-radius" src="{{ url('assets/images/avatar-4.jpg') }}"
                                         alt="User-Profile-Image">
                                     <div class="user-details">
-                                        <span id="more-details">{{Auth::user()->name}}<i class="fa fa-caret-down"></i></span>
+                                        <span id="more-details">{{ Auth::user()->name }}<i
+                                                class="fa fa-caret-down"></i></span>
                                     </div>
                                 </div>
 
@@ -235,31 +238,32 @@
 
                             <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Layout</div>
                             <ul class="pcoded-item pcoded-left-item">
-                               
-                                <li class="{{request()->routeIs('home') ? 'active' : ''}}">
-                                    <a href="{{route('home')}}" class="waves-effect waves-dark">
+
+                                <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
+                                    <a href="{{ route('home') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>FC</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.form-components.main">Home</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                <li class="pcoded-hasmenu {{request()->routeIs(['category.*','post.*']) ? 'active pcoded-trigger' : ''}}">
+                                <li
+                                    class="pcoded-hasmenu {{ request()->routeIs(['category.*', 'post.*']) ? 'active pcoded-trigger' : '' }}">
                                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-pencil-alt"></i></span>
                                         <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Blog</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
-                                        <li class="{{request()->routeIs('category.*') ? 'active' : ''}}">
-                                            <a href="{{route('category.index')}}" class="waves-effect waves-dark">
+                                        <li class="{{ request()->routeIs('category.*') ? 'active' : '' }}">
+                                            <a href="{{ route('category.index') }}" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext"
                                                     data-i18n="nav.basic-components.breadcrumbs">Kategori</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
-                                        <li class="{{request()->routeIs('post.*') ? 'active' : ''}} ">
-                                            <a href="{{route('post.index')}}" class="waves-effect waves-dark">
+                                        <li class="{{ request()->routeIs('post.*') ? 'active' : '' }} ">
+                                            <a href="{{ route('post.index') }}" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext"
                                                     data-i18n="nav.basic-components.breadcrumbs">Post</span>
@@ -379,43 +383,49 @@
 <![endif]-->
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
-    <script type="text/javascript" src="{{url('assets/js/jquery/jquery.min.js')}}"></script>
-    <script type="text/javascript" src="{{url('assets/js/jquery-ui/jquery-ui.min.js')}} "></script>
-    <script type="text/javascript" src="{{url('assets/js/popper.js/popper.min.js')}}"></script>
-    <script type="text/javascript" src="{{url('assets/js/bootstrap/js/bootstrap.min.js')}} "></script>
+    <script type="text/javascript" src="{{ url('assets/js/jquery/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('assets/js/jquery-ui/jquery-ui.min.js') }} "></script>
+    <script type="text/javascript" src="{{ url('assets/js/popper.js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('assets/js/bootstrap/js/bootstrap.min.js') }} "></script>
     <!-- waves js -->
-    <script src="{{url('assets/pages/waves/js/waves.min.js')}}"></script>
+    <script src="{{ url('assets/pages/waves/js/waves.min.js') }}"></script>
     <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="{{url('assets/js/jquery-slimscroll/jquery.slimscroll.js')}} "></script>
+    <script type="text/javascript" src="{{ url('assets/js/jquery-slimscroll/jquery.slimscroll.js') }} "></script>
     <!-- modernizr js -->
-    <script type="text/javascript" src="{{url('assets/js/SmoothScroll.js')}}"></script>
-    <script src="{{url('assets/js/jquery.mCustomScrollbar.concat.min.js')}} "></script>
-    <script src="{{url('assets/js/pcoded.min.js')}}"></script>
-    <script src="{{url('assets/js/vertical-layout.min.js ')}}"></script>
-    <script src="{{url('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/js/SmoothScroll.js') }}"></script>
+    <script src="{{ url('assets/js/jquery.mCustomScrollbar.concat.min.js') }} "></script>
+    <script src="{{ url('assets/js/pcoded.min.js') }}"></script>
+    <script src="{{ url('assets/js/vertical-layout.min.js ') }}"></script>
+    <script src="{{ url('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- Custom js -->
-    <script type="text/javascript" src="{{url('assets/js/script.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+    <script type="text/javascript" src="{{ url('assets/plugin/summernote.min.js') }}"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#myTable').DataTable();
         });
     </script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        $('#deleteModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Tombol yang memicu modal
-            var id = button.data('id'); // Ambil ID dari atribut data-id
-            
-            // Update form action dengan ID dinamis
-            var form = $('#deleteForm');
-            form.attr('action', '/category/' + id);
+    <script>
+        $('#summernote').summernote({
+          tabsize: 2,
+          height: 500
         });
-    });
-</script>
+      </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#deleteModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget); // Tombol yang memicu modal
+                var id = button.data('id'); // Ambil ID dari atribut data-id
 
-    
+                // Update form action dengan ID dinamis
+                var form = $('#deleteForm');
+                form.attr('action', '/category/' + id);
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>

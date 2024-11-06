@@ -45,7 +45,7 @@
                                                         <th class="w-5">No</th>
                                                         <th class="w-5">Thumbnail</th>
                                                         <th class="col">Post</th>
-                                                        <th class="col"><a href="{{route('category.create')}}" class="btn btn-sm btn-grd-inverse">Tambah Post</a></th>
+                                                        <th class="col"><a href="{{route('post.create')}}" class="btn btn-sm btn-grd-inverse">Tambah Post</a></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

@@ -17,8 +17,9 @@ return new class extends Migration
             $table->text('slug');
             $table->text('thumbnail');
             $table->longText('content');
-            $table->text('user_id');
-            $table->text('category_id');
+            $table->boolean('isPublish')->default(1);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
