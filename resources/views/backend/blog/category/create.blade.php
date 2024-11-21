@@ -55,7 +55,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-sm btn-grd-info">simpan</button>
-                                            <button type="reset" class="btn btn-sm btn-grd-secondary">batal</button>
+                                            <a href="{{route('category.index')}}" class="btn btn-sm btn-grd-secondary" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
                                         </form>
                                     </div>
                                 </div>

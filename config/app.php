@@ -98,8 +98,8 @@ return [
     |
     */
 
-    'fallback_locale' => 'id',
-    // 'fallback_locale' => 'en',
+    // 'fallback_locale' => 'id',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------

@@ -97,4 +97,9 @@ class CategoryController extends Controller
         session()->flash('pesan','Kategori Berhasil Dihapus');
         return redirect()->route('category.index');
     }
+
+    public function page()
+    {
+        return view('backend.blog.page.index');
+    }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Mega Able bootstrap admin template by codedthemes </title>
+    <title>Kemahasiswaan</title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -32,7 +32,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url('assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url('assets/css/jquery.mCustomScrollbar.css') }}">
     <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet">
-    <link type="text/css" href="{{url('assets/plugin/summernote.css')}}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.dataTables.css" rel="stylesheet">
+
+    <link type="text/css" href="{{ url('assets/plugin/summernote.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -272,6 +274,29 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="{{ request()->routeIs('download.*') ? 'active' : '' }}">
+                                    <a href="{{ route('download.index') }}" class="waves-effect waves-dark">
+                                        <span class="pcoded-micon"><i class="ti-download"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext"
+                                            data-i18n="nav.form-components.main">Download</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('achievement.*') ? 'active' : '' }}">
+                                    <a href="{{ route('achievement.index') }}" class="waves-effect waves-dark">
+                                        <span class="pcoded-micon"><i class="ti-medall"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext"
+                                            data-i18n="nav.form-components.main">Achievement</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                                {{-- <li class="{{ request()->routeIs('prestasi.*') ? 'active' : '' }}">
+                                    <a href="{{ route('prestasi.index') }}" class="waves-effect waves-dark">
+                                        <span class="pcoded-micon"><i class="ti-medall"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">Prestasi Mahasiswa</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li> --}}
 
                             </ul>
 
@@ -400,30 +425,32 @@
     <!-- Custom js -->
     <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
     <script type="text/javascript" src="{{ url('assets/plugin/summernote.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                responsive: true,
+                columnDefs: [{
+                        responsivePriority: 1,
+                        targets: 0
+                    },
+                    {
+                        responsivePriority: 2,
+                        targets: -1
+                    }
+                ]
+            });
         });
     </script>
     <script>
         $('#summernote').summernote({
-          tabsize: 2,
-          height: 500
-        });
-      </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#deleteModal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget); // Tombol yang memicu modal
-                var id = button.data('id'); // Ambil ID dari atribut data-id
-
-                // Update form action dengan ID dinamis
-                var form = $('#deleteForm');
-                form.attr('action', '/category/' + id);
-            });
+            tabsize: 2,
+            height: 500
         });
     </script>
+
 
 
 </body>
