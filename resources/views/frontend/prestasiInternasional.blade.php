@@ -21,23 +21,23 @@
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             {{-- <h2>Starter Section</h2> --}}
-            <p><span>Daftar Prestasi Mahasiswa</span> </p>
+            <p><span>Daftar Prestasi Mahasiswa - Internasional</span> </p>
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up">
             {{-- <h3>Daftar Prestasi Mahasiswa</h3> --}}
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('prestasi') }}">Regional</a>
+                    <a class="nav-link " aria-current="page" href="{{route('prestasi')}}">Regional</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('prestasiProvinsi') }}">Provinsi</a>
+                    <a class="nav-link " href="{{route('prestasiProvinsi')}}">Provinsi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('prestasiNasional') }}">Nasional</a>
+                    <a class="nav-link " href="{{route('prestasiNasional')}}">Nasional</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('prestasiInternasional') }}">Internasional</a>
+                    <a class="nav-link active" href="{{route('prestasiInternasional')}}">Internasional</a>
                 </li>
             </ul>
             <hr>
@@ -78,6 +78,8 @@
         </div>
 
     </section><!-- /Starter Section Section -->
+
+    
 @endsection
 
 @section('scripts')

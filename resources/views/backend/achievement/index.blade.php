@@ -37,6 +37,7 @@
                                                         {{-- <th class="w-1">No</th> --}}
                                                         <th >NIM</th>
                                                         <th >Nama</th>
+                                                        <th >Prodi</th>
                                                         <th >Event</th>
                                                         <th >Nama Penghargaan</th>
                                                         <th >Peringkat</th>
@@ -54,6 +55,7 @@
                                                             {{-- <th scope="row">{{ $loop->iteration }}</th> --}}
                                                             <td>{{ $item->nim }}</td>
                                                             <td>{{ $item->nama }}</td>
+                                                            <td>{{ $item->prodi }}</td>
                                                             <td>{{ $item->event }}</td>
                                                             <td>{{ $item->namaPenghargaan }}</td>
                                                             <td>{{ $item->peringkat }}</td>

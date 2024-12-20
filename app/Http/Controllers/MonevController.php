@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\Category;
+use App\Models\Monev;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class PostController extends Controller
+class MonevController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::latest()->get();
-        return view('backend.blog.post.index', compact('posts'));
+        $monevs = Monev::latest()->paginate(9);
+        return view('backend.monev.index', compact('monevs'));
     }
 
     /**
@@ -25,8 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('backend.blog.post.create', compact('categories'));
+        return view('backend.monev.create');
     }
 
     /**
@@ -39,7 +37,6 @@ class PostController extends Controller
             'title' => 'required|min:3',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
             'content' => 'required',
-            'category_id' => 'required|exists:categories,id',
         ], [
             'title.required' => 'Judul harus diisi.',
             'title.min' => 'Judul harus terdiri dari minimal 3 karakter.',
@@ -48,8 +45,6 @@ class PostController extends Controller
             'thumbnail.mimes' => 'Thumbnail harus berformat: jpeg, png, jpg, atau gif.',
             'thumbnail.max' => 'Thumbnail tidak boleh lebih dari 2MB.',
             'content.required' => 'Konten harus diisi.',
-            'category_id.required' => 'Kategori harus dipilih.',
-            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
         ]);
 
         // Generate slug dari title
@@ -75,42 +70,39 @@ class PostController extends Controller
             $validatedData['thumbnail'] = $thumbnailPath;
         }
 
-        // Simpan data ke dalam tabel posts
-        Post::create($validatedData);
+        // Simpan data ke dalam tabel student-activities
+        Monev::create($validatedData);
         session()->flash('status', 'SUKSES');
-        session()->flash('pesan', 'Post Berhasil Ditambahkan');
-        return redirect()->route('post.index');
+        session()->flash('pesan', 'Monev Berhasil Ditambahkan');
+        return redirect()->route('monev.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Monev $monev)
     {
-        $recentPost = Post::latest()->paginate(5);
-        return view('frontend.blog-detail', compact('post','recentPost'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Monev $monev)
     {
-        $categories = Category::all();
-        return view('backend.blog.post.edit', ['post' => $post, 'categories' => $categories]);
+        return view('backend.monev.edit', ['monev' => $monev]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Monev $monev)
     {
         // Validasi data
         $validatedData = $request->validate([
             'title' => 'required|min:3',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // thumbnail tidak wajib diisi
             'content' => 'required',
-            'category_id' => 'required|exists:categories,id',
         ], [
             'title.required' => 'Judul harus diisi.',
             'title.min' => 'Judul harus terdiri dari minimal 3 karakter.',
@@ -118,8 +110,6 @@ class PostController extends Controller
             'thumbnail.mimes' => 'Thumbnail harus berformat: jpeg, png, jpg, atau gif.',
             'thumbnail.max' => 'Thumbnail tidak boleh lebih dari 2MB.',
             'content.required' => 'Konten harus diisi.',
-            'category_id.required' => 'Kategori harus dipilih.',
-            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
         ]);
 
         // Generate slug dari title
@@ -132,8 +122,8 @@ class PostController extends Controller
         // Periksa apakah ada file thumbnail baru yang diunggah
         if ($request->hasFile('thumbnail')) {
             // Hapus thumbnail lama jika ada
-            if ($post->thumbnail && Storage::disk('public')->exists($post->thumbnail)) {
-                Storage::disk('public')->delete($post->thumbnail);
+            if ($monev->thumbnail && Storage::disk('public')->exists($monev->thumbnail)) {
+                Storage::disk('public')->delete($monev->thumbnail);
             }
 
             // Simpan thumbnail baru dengan nama sesuai slug
@@ -145,28 +135,28 @@ class PostController extends Controller
             $validatedData['thumbnail'] = $thumbnailPath;
         }
 
-        // Update data post
-        $post->update($validatedData);
+        // Update data monev
+        $monev->update($validatedData);
 
         // Pesan sukses dan redirect
         session()->flash('status', 'UPDATED');
-        session()->flash('pesan', 'Post berhasil diperbarui');
-        return redirect()->route('post.index');
+        session()->flash('pesan', 'Monev berhasil diperbarui');
+        return redirect()->route('monev.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Monev $monev)
     {
         // Cek jika thumbnail ada dan file tersebut ada di storage
-        if ($post->thumbnail && Storage::disk('public')->exists($post->thumbnail)) {
+        if ($monev->thumbnail && Storage::disk('public')->exists($monev->thumbnail)) {
             // Hapus file thumbnail dari storage
-            Storage::disk('public')->delete($post->thumbnail);
+            Storage::disk('public')->delete($monev->thumbnail);
         }
-        $post->delete();
+        $monev->delete();
         session()->flash('status', 'TERHAPUS');
-        session()->flash('pesan', 'Post Berhasil Dihapus');
-        return redirect()->route('post.index');
+        session()->flash('pesan', 'Monev Berhasil Dihapus');
+        return redirect()->route('monev.index');
     }
 }

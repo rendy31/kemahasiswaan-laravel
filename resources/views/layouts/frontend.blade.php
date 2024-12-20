@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Kemahasiswaan</title>
+    <title>KemahasiSwaan</title>
     <meta name="description" content="Kemahasiswaan STIKES Suaka Insan">
     <meta name="keywords" content="Kemahasiswaan STIKES Suaka Insan">
 
@@ -43,27 +43,32 @@
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-            <a href="index.html" class="logo d-flex align-items-center">
+            {{-- <a href="#" class="logo d-flex align-items-center">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
-                <img src="{{url('assets/frontend/img/logostikes.png')}}" alt=""> 
+                <img src="{{url('assets/frontend/img/logostikes.png')}}" alt="logo stikes suaka insan"> 
                 <h1 class="sitename">Kemahasiswaan</h1>
+            </a> --}}
+            <a href="https://pmb.stikessuakainsan.ac.id" class="logo d-flex align-items-center me-auto me-xl-0">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <img src="{{url('assets/frontend/img/logostikes.png')}}" class="img-fluid" alt="Kemahasiswaan STIKES Suaka Insan">
 
-                {{-- <div class="container text-start mx-1 my-1">
-                    <div class="row align-items-start">
-                        <div class="col">
-                            <img src="assets/frontend/img/logostikes.png" alt="">
-                        </div>
-                        <div class="col">
-                            <h1 class="sitename">Kemahasiswaan</h1>
-                        </div>
-                    </div>
-                </div> --}}
+                <!-- <h1 class="sitename">STIKES Suaka Insan</h1><span>.</span> -->
+                <div class="card bg-transparent" style="border: none;">
+                  <ul class="list-group list-group-flush ">
+                    <li class="list-group-item bg-transparent p-0" style="border: none;">
+                      <h4 class="sitename">KEMAHASISWAAN</h4>
+                    </li>
+                    <li class="list-group-item bg-transparent p-0" style="border: none;">
+                      <h6 class="sitename">STIKES Suaka Insan</h6>
+                    </li>
+                  </ul>
+                </div>
+              </a>
 
-            </a>
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="/" class="active">Beranda</a></li>
+                    <li><a href="/" class="{{request()->routeIs('beranda') ? 'active':''}}">Beranda</a></li>
                     <li class="dropdown"><a href="#"><span>Kemahasiswaan</span>
                             <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
@@ -77,26 +82,26 @@
                                     <li><a href="#">HIMA AdminKes</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Keg. Mahasiswa</a></li>
+                            <li><a href="{{route('kegiatanMhs')}}">Keg. Mahasiswa</a></li>
                             <li><a href="#">Pengembangan Karakter</a></li>
                             <li><a href="#">Asrama</a></li>
                         </ul>
                     </li>
-                    <li><a href="#about">Beasiswa</a></li>
-                    <li><a href="/prestasi">Prestasi</a></li>
-                    <li class="dropdown"><a href="#"><span>Layanan</span>
+                    <li><a href="#">Beasiswa</a></li>
+                    <li><a href="{{route('prestasi')}}" class="{{request()->routeIs(['prestasi', 'prestasiProvinsi', 'prestasiNasional', 'prestasiInternasional']) ? 'active':''}}">Prestasi</a></li>
+                    <li class="dropdown"><a href="#" {{request()->routeIs('downloadfile') ? 'active':''}}"><span>Layanan</span>
                             <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li><a href="#">Bimbingan Konseling</a></li>
-                            <li><a href="#">Carier Center</a></li>
-                            <li><a href="#">E-Book</a></li>
+                            <li><a href="https://bimsel.stikessuakainsan.ac.id" target="blank">Bimbingan Konseling</a></li>
+                            <li><a href="https://cc.stikessuakainsan.ac.id" target="blank">Carier Center</a></li>
+                            <li><a href="{{route('downloadfile')}}" >Download</a></li>
                         </ul>
                     </li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li class="dropdown"><a href="#"><span>Laporan</span>
+                    <li><a href="{{route('blog')}}" class="{{request()->routeIs('blog') ? 'active':''}}">Blog</a></li>
+                    <li class="dropdown"><a href="#" class="{{request()->routeIs('monev') ? 'active':''}}"><span>Laporan</span>
                             <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li><a href="#">Monev & Audit</a></li>
+                            <li><a href="{{route('monev')}}" class="{{request()->routeIs('monev') ? 'active':''}}">Monev & Audit</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -158,12 +163,7 @@
                 </div> --}}
 
                 <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-                    <h4>Contact Us</h4>
-                    <p>A108 Adam Street</p>
-                    <p>New York, NY 535022</p>
-                    <p>United States</p>
-                    <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-                    <p><strong>Email:</strong> <span>info@example.com</span></p>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.145036627545!2d114.57649357374403!3d-3.314296941203265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2de423c9c5e61985%3A0x2d9edd614691e3be!2sSTIKES%20Suaka%20Insan!5e0!3m2!1sen!2sid!4v1733385422273!5m2!1sen!2sid" width="600" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
 
             </div>
@@ -202,6 +202,11 @@
     <!-- Main JS File -->
     <script src="{{url('assets/frontend/js/main.js')}}"></script>
 
+    {{-- CHART JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- CHART JS SCRIPT --}}
+    @yield('scripts')
+    
 </body>
 
 </html>

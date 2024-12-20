@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <a href="index.html">
-                            <img class="img-fluid" src="{{ url('assets/images/logo.png') }}" alt="Theme-Logo" />
+                            <img class="img-fluid" src="{{ url('assets/images/logobackend.png') }}" alt="Theme-Logo" />
                         </a>
                         <a class="mobile-options waves-effect waves-light">
                             <i class="ti-more"></i>
@@ -274,6 +274,115 @@
                                         </li>
                                     </ul>
                                 </li>
+                                {{-- <li class="{{ request()->routeIs('kegiatan-mahasiswa.*') ? 'active' : '' }}">
+                                    <a href="{{ route('kegiatan-mahasiswa.index') }}" class="waves-effect waves-dark">
+                                        <span class="pcoded-micon"><i class="ti-target"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext"
+                                            data-i18n="nav.form-components.main">Keg.Mahasiswa</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li> --}}
+
+
+                                <ul class="pcoded-item pcoded-left-item">
+                                    <li class="pcoded-hasmenu {{ request()->routeIs(['kegiatan-mahasiswa.*']) ? 'active pcoded-trigger' : '' }}">
+                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Kemahasiswaan</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                        <ul class="pcoded-submenu">
+                                            <li class="{{ request()->routeIs('kegiatan-mahasiswa.*') ? 'active' : '' }}">
+                                                <a href="{{ route('kegiatan-mahasiswa.index') }}" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                    <span class="pcoded-mtext"
+                                                        data-i18n="nav.menu-levels.menu-level-21">Keg.Mahasiswa</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                    <span class="pcoded-mtext"
+                                                        data-i18n="nav.menu-levels.menu-level-21">Pengembangan Karakter</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                    <span class="pcoded-mtext"
+                                                        data-i18n="nav.menu-levels.menu-level-21">Asrama</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                                </a>
+                                            </li>
+                                            <li class="pcoded-hasmenu ">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                                                    <span class="pcoded-mtext"
+                                                        data-i18n="nav.menu-levels.menu-level-22.main">Organisasi</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                                </a>
+                                                <ul class="pcoded-submenu">
+                                                    <li class="">
+                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                            <span class="pcoded-micon"><i
+                                                                    class="ti-angle-right"></i></span>
+                                                            <span class="pcoded-mtext"
+                                                                data-i18n="nav.menu-levels.menu-level-22.menu-level-31">BEM</span>
+                                                            <span class="pcoded-mcaret"></span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                            <span class="pcoded-micon"><i
+                                                                    class="ti-angle-right"></i></span>
+                                                            <span class="pcoded-mtext"
+                                                                data-i18n="nav.menu-levels.menu-level-22.menu-level-31">HIMA PSIK</span>
+                                                            <span class="pcoded-mcaret"></span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                            <span class="pcoded-micon"><i
+                                                                    class="ti-angle-right"></i></span>
+                                                            <span class="pcoded-mtext"
+                                                                data-i18n="nav.menu-levels.menu-level-22.menu-level-31">HIMA Fisioterapi</span>
+                                                            <span class="pcoded-mcaret"></span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                            <span class="pcoded-micon"><i
+                                                                    class="ti-angle-right"></i></span>
+                                                            <span class="pcoded-mtext"
+                                                                data-i18n="nav.menu-levels.menu-level-22.menu-level-31">HIMA AdminKes</span>
+                                                            <span class="pcoded-mcaret"></span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            {{-- <li class="">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                    <span class="pcoded-mtext"
+                                                        data-i18n="nav.menu-levels.menu-level-23">Menu Level 2.3</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                                </a>
+                                            </li> --}}
+    
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                                <li class="{{ request()->routeIs('monev.*') ? 'active' : '' }}">
+                                    <a href="{{ route('monev.index') }}" class="waves-effect waves-dark">
+                                        <span class="pcoded-micon"><i class="ti-agenda"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext"
+                                            data-i18n="nav.form-components.main">Monev</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
                                 <li class="{{ request()->routeIs('download.*') ? 'active' : '' }}">
                                     <a href="{{ route('download.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-download"></i><b>FC</b></span>
@@ -284,28 +393,28 @@
                                 </li>
                                 <li class="{{ request()->routeIs('achievement.*') ? 'active' : '' }}">
                                     <a href="{{ route('achievement.index') }}" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="ti-medall"></i><b>FC</b></span>
+                                        <span class="pcoded-micon"><i class="ti-cup"></i><b>FC</b></span>
                                         <span class="pcoded-mtext"
-                                            data-i18n="nav.form-components.main">Achievement</span>
+                                            data-i18n="nav.form-components.main">Prestasi</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                {{-- <li class="{{ request()->routeIs('prestasi.*') ? 'active' : '' }}">
-                                    <a href="{{ route('prestasi.index') }}" class="waves-effect waves-dark">
+                                <li class="">
+                                    <a href="" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-medall"></i><b>FC</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">Prestasi Mahasiswa</span>
+                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">Beasiswa</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
-                                </li> --}}
+                                </li>
 
                             </ul>
 
-                            <div class="pcoded-navigation-label" data-i18n="nav.category.other">Other</div>
+                            <div class="pcoded-navigation-label" data-i18n="nav.category.other">Setting</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu ">
                                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Menu Levels</span>
+                                        <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Sistem</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -313,7 +422,7 @@
                                             <a href="javascript:void(0)" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext"
-                                                    data-i18n="nav.menu-levels.menu-level-21">Menu Level 2.1</span>
+                                                    data-i18n="nav.menu-levels.menu-level-21">Users</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -321,8 +430,7 @@
                                             <a href="javascript:void(0)" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
                                                 <span class="pcoded-mtext"
-                                                    data-i18n="nav.menu-levels.menu-level-22.main">Menu Level
-                                                    2.2</span>
+                                                    data-i18n="nav.menu-levels.menu-level-22.main">Akses</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                             <ul class="pcoded-submenu">
@@ -331,21 +439,29 @@
                                                         <span class="pcoded-micon"><i
                                                                 class="ti-angle-right"></i></span>
                                                         <span class="pcoded-mtext"
-                                                            data-i18n="nav.menu-levels.menu-level-22.menu-level-31">Menu
-                                                            Level 3.1</span>
+                                                            data-i18n="nav.menu-levels.menu-level-22.menu-level-31">Role</span>
+                                                        <span class="pcoded-mcaret"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i
+                                                                class="ti-angle-right"></i></span>
+                                                        <span class="pcoded-mtext"
+                                                            data-i18n="nav.menu-levels.menu-level-22.menu-level-31">Permission</span>
                                                         <span class="pcoded-mcaret"></span>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li class="">
+                                        {{-- <li class="">
                                             <a href="javascript:void(0)" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext"
                                                     data-i18n="nav.menu-levels.menu-level-23">Menu Level 2.3</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                        </li>
+                                        </li> --}}
 
                                     </ul>
                                 </li>
@@ -424,10 +540,18 @@
     <script src="{{ url('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- Custom js -->
     <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script>
+
+    {{-- DATATABLES --}}
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
+
+    
+
+    {{-- SUMMERNOTE --}}
     <script type="text/javascript" src="{{ url('assets/plugin/summernote.min.js') }}"></script>
+
+    {{-- DATATABLES SCRIPT --}}
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
@@ -444,6 +568,8 @@
             });
         });
     </script>
+
+    {{-- DATATABLES SUMERNOTE --}}
     <script>
         $('#summernote').summernote({
             tabsize: 2,
@@ -451,6 +577,7 @@
         });
     </script>
 
+    
 
 
 </body>

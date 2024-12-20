@@ -49,6 +49,24 @@
                                                     @enderror
                                                 </div>
                                             </div>
+                                            <div class="form-group @error('prodi') has-danger @enderror row">
+                                                <label for="colFormLabelSm"
+                                                    class="col-sm-2 col-form-label col-form-label-sm">prodi</label>
+                                                <div class="col-sm-4">
+                                                    <select name="prodi" class="form-control">
+                                                        <option value="">:. Pilih Prodi  .:</option>
+                                                        <option value="PSIK & Ners" {{ old('prodi', $achievement->prodi) == 'PSIK & Ners' ? 'selected' : '' }}>PSIK & Ners</option>
+                                                        <option value="Fisioterapi" {{ old('prodi', $achievement->prodi) == 'Fisioterapi' ? 'selected' : '' }}>Fisioterapi</option>
+                                                        <option value="Administrasi Kesehatan" {{ old('prodi', $achievement->prodi) == 'Administrasi Kesehatan' ? 'selected' : '' }}>Administrasi Kesehatan</option>
+                                                    </select>
+                                                    
+                                                    @error('prodi')
+                                                        <span class="col-form-label">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                             <div class="form-group @error('penyelenggara') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
                                                     class="col-sm-2 col-form-label col-form-label-sm">Penyelenggara</label>
@@ -139,9 +157,6 @@
                                                         <option value="Juara 2" {{ old('peringkat', $achievement->peringkat) == 'Juara 2' ? 'selected' : '' }}>Juara 2</option>
                                                         <option value="Juara 3" {{ old('peringkat', $achievement->peringkat) == 'Juara 3' ? 'selected' : '' }}>Juara 3</option>
                                                         <option value="Juara Harapan" {{ old('peringkat', $achievement->peringkat) == 'Juara Harapan' ? 'selected' : '' }}>Juara Harapan</option>
-                                                        <option value="Juara Harapan 1" {{ old('peringkat', $achievement->peringkat) == 'Juara Harapan 1' ? 'selected' : '' }}>Juara Harapan 1</option>
-                                                        <option value="Juara Harapan 2" {{ old('peringkat', $achievement->peringkat) == 'Juara Harapan 2' ? 'selected' : '' }}>Juara Harapan 2</option>
-                                                        <option value="Juara Harapan 3" {{ old('peringkat', $achievement->peringkat) == 'Juara Harapan 3' ? 'selected' : '' }}>Juara Harapan 3</option>
                                                     </select>
                                                     
                                                     @error('peringkat')

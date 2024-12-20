@@ -34,6 +34,7 @@ class AchievementController extends Controller
         $validatedData = $request->validate([
             'nim' => 'required|min:3',
             'nama' => 'required|min:3',
+            'prodi' => 'required|min:3',
             'event' => 'required|min:3',
             'penyelenggara' => 'required|min:3',
             'tempat' => 'required|min:3',
@@ -49,6 +50,9 @@ class AchievementController extends Controller
 
             'nama.required' => 'Nama wajib diisi.',
             'nama.min' => 'Nama harus terdiri dari minimal 3 karakter.',
+            
+            'prodi.required' => 'Prodi wajib diisi.',
+            'prodi.min' => 'Prodi harus terdiri dari minimal 3 karakter.',
 
             'event.required' => 'event wajib diisi.',
             'event.min' => 'event harus terdiri dari minimal 3 karakter.',
@@ -81,6 +85,7 @@ class AchievementController extends Controller
         $achievement = new Achievement();
         $achievement->nim = $validatedData['nim'];
         $achievement->nama = $validatedData['nama'];
+        $achievement->prodi = $validatedData['prodi'];
         $achievement->event = $validatedData['event'];
         $achievement->penyelenggara = $validatedData['penyelenggara'];
         $achievement->tempat = $validatedData['tempat'];
@@ -129,6 +134,7 @@ class AchievementController extends Controller
         $validatedData = $request->validate([
             'nim' => 'required|min:3',
             'nama' => 'required|min:3',
+            'prodi' => 'required|min:3',
             'event' => 'required|min:3',
             'penyelenggara' => 'required|min:3',
             'tempat' => 'required|min:3',
@@ -145,6 +151,9 @@ class AchievementController extends Controller
             'nama.required' => 'Nama wajib diisi.',
             'nama.min' => 'Nama harus terdiri dari minimal 3 karakter.',
 
+            'prodi.required' => 'Prodi wajib diisi.',
+            'prodi.min' => 'Prodi harus terdiri dari minimal 3 karakter.',
+            
             'event.required' => 'Event wajib diisi.',
             'event.min' => 'Event harus terdiri dari minimal 3 karakter.',
 

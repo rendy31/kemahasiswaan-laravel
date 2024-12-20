@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\Category;
+use App\Models\scholarship;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class PostController extends Controller
+class ScholarshipController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::latest()->get();
-        return view('backend.blog.post.index', compact('posts'));
+        $scholarship = scholarship::latest()->paginate(9);
+        return view('backend.scholarship.index', compact('scholarship'));
     }
 
     /**
@@ -25,8 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('backend.blog.post.create', compact('categories'));
+        return view('backend.scholarship.create');
     }
 
     /**
@@ -39,7 +37,6 @@ class PostController extends Controller
             'title' => 'required|min:3',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
             'content' => 'required',
-            'category_id' => 'required|exists:categories,id',
         ], [
             'title.required' => 'Judul harus diisi.',
             'title.min' => 'Judul harus terdiri dari minimal 3 karakter.',
@@ -48,8 +45,6 @@ class PostController extends Controller
             'thumbnail.mimes' => 'Thumbnail harus berformat: jpeg, png, jpg, atau gif.',
             'thumbnail.max' => 'Thumbnail tidak boleh lebih dari 2MB.',
             'content.required' => 'Konten harus diisi.',
-            'category_id.required' => 'Kategori harus dipilih.',
-            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
         ]);
 
         // Generate slug dari title
@@ -75,42 +70,40 @@ class PostController extends Controller
             $validatedData['thumbnail'] = $thumbnailPath;
         }
 
-        // Simpan data ke dalam tabel posts
-        Post::create($validatedData);
+        // Simpan data ke dalam tabel student-activities
+        scholarship::create($validatedData);
         session()->flash('status', 'SUKSES');
-        session()->flash('pesan', 'Post Berhasil Ditambahkan');
-        return redirect()->route('post.index');
+        session()->flash('pesan', 'Beasiswa Berhasil Ditambahkan');
+        return redirect()->route('scholarship.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(scholarship $scholarship)
     {
-        $recentPost = Post::latest()->paginate(5);
-        return view('frontend.blog-detail', compact('post','recentPost'));
+        // $recentStudentActivity = studentActivity::latest()->paginate(5);
+        return view('frontend.beasiswa-detail', compact('scholarship'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(scholarship $scholarship)
     {
-        $categories = Category::all();
-        return view('backend.blog.post.edit', ['post' => $post, 'categories' => $categories]);
+        return view('backend.scholarship.edit', ['scholarship' => $scholarship]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, scholarship $scholarship)
     {
         // Validasi data
         $validatedData = $request->validate([
             'title' => 'required|min:3',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // thumbnail tidak wajib diisi
             'content' => 'required',
-            'category_id' => 'required|exists:categories,id',
         ], [
             'title.required' => 'Judul harus diisi.',
             'title.min' => 'Judul harus terdiri dari minimal 3 karakter.',
@@ -118,8 +111,6 @@ class PostController extends Controller
             'thumbnail.mimes' => 'Thumbnail harus berformat: jpeg, png, jpg, atau gif.',
             'thumbnail.max' => 'Thumbnail tidak boleh lebih dari 2MB.',
             'content.required' => 'Konten harus diisi.',
-            'category_id.required' => 'Kategori harus dipilih.',
-            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
         ]);
 
         // Generate slug dari title
@@ -132,8 +123,8 @@ class PostController extends Controller
         // Periksa apakah ada file thumbnail baru yang diunggah
         if ($request->hasFile('thumbnail')) {
             // Hapus thumbnail lama jika ada
-            if ($post->thumbnail && Storage::disk('public')->exists($post->thumbnail)) {
-                Storage::disk('public')->delete($post->thumbnail);
+            if ($scholarship->thumbnail && Storage::disk('public')->exists($scholarship->thumbnail)) {
+                Storage::disk('public')->delete($scholarship->thumbnail);
             }
 
             // Simpan thumbnail baru dengan nama sesuai slug
@@ -145,28 +136,28 @@ class PostController extends Controller
             $validatedData['thumbnail'] = $thumbnailPath;
         }
 
-        // Update data post
-        $post->update($validatedData);
+        // Update data studentAc$scholarship
+        $scholarship->update($validatedData);
 
         // Pesan sukses dan redirect
         session()->flash('status', 'UPDATED');
-        session()->flash('pesan', 'Post berhasil diperbarui');
-        return redirect()->route('post.index');
+        session()->flash('pesan', 'Beasiswa berhasil diperbarui');
+        return redirect()->route('scholarship.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(scholarship $scholarship)
     {
         // Cek jika thumbnail ada dan file tersebut ada di storage
-        if ($post->thumbnail && Storage::disk('public')->exists($post->thumbnail)) {
+        if ($scholarship->thumbnail && Storage::disk('public')->exists($scholarship->thumbnail)) {
             // Hapus file thumbnail dari storage
-            Storage::disk('public')->delete($post->thumbnail);
+            Storage::disk('public')->delete($scholarship->thumbnail);
         }
-        $post->delete();
+        $scholarship->delete();
         session()->flash('status', 'TERHAPUS');
-        session()->flash('pesan', 'Post Berhasil Dihapus');
-        return redirect()->route('post.index');
+        session()->flash('pesan', 'Beasiswa Berhasil Dihapus');
+        return redirect()->route('scholarship.index');
     }
 }

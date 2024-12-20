@@ -48,6 +48,23 @@
                                                     @enderror
                                                 </div>
                                             </div>
+                                            <div class="form-group @error('prodi') has-danger @enderror row">
+                                                <label for="colFormLabelSm"
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Program Studi</label>
+                                                <div class="col-sm-4">
+                                                    <select name="prodi" class="form-control">
+                                                        <option selected>:. Pilih Prodi .:</option>
+                                                        <option value="PSIK & Ners">PSIK & Ners</option>
+                                                        <option value="Fisioterapi">Fisioterapi</option>
+                                                        <option value="Administrasi Kesehatan">Administrasi Kesehatan</option>
+                                                    </select>
+                                                    @error('prodi')
+                                                        <span class="col-form-label">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                             <div class="form-group @error('penyelenggara') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
                                                     class="col-sm-2 col-form-label col-form-label-sm">Penyelenggara</label>
@@ -140,9 +157,6 @@
                                                         <option value="Juara 2">Juara 2</option>
                                                         <option value="Juara 3">Juara 3</option>
                                                         <option value="Juara Harapan">Juara Harapan</option>
-                                                        <option value="Juara Harapan 1">Juara Harapan 1</option>
-                                                        <option value="Juara Harapan 2">Juara Harapan 2</option>
-                                                        <option value="Juara Harapan 3">Juara Harapan 3</option>
                                                     </select>
                                                     @error('peringkat')
                                                         <span class="col-form-label">

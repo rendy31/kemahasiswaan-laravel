@@ -19,7 +19,7 @@
                                 @endif
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5>Post</h5>
+                                        <h5>Beasiswa</h5>
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
@@ -30,15 +30,15 @@
                                                     <tr>
                                                         <th class="w-5">No</th>
                                                         <th class="w-5">Thumbnail</th>
-                                                        <th class="col-md-8">Post</th>
+                                                        <th class="col-md-8">Beasiswa</th>
                                                         <th class="justify-content-center align-items-center"><a
-                                                                href="{{ route('post.create') }}"
+                                                                href="{{ route('scholarship.create') }}"
                                                                 class="btn btn-sm btn-mat waves-effect waves-light btn-primary">Tambah
-                                                                Post</a></th>
+                                                                Beasiswa</a></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($posts as $item)
+                                                    @foreach ($scolarship as $item)
                                                         <tr>
                                                             <th class="align-middle">{{ $loop->iteration }}</th>
                                                             <td class="align-middle"><img src="{{ Storage::url($item->thumbnail) }}"
@@ -46,7 +46,6 @@
                                                             <td>
                                                                 {{ $item->title }} <br>
                                                                 <b>Publisher :</b> <i>{{ $item->user->name }}</i> <br>
-                                                                <b>Kategori :</b> <i>{{ $item->category->name }}</i> <br>
                                                                 <b>Tgl Dibuat :</b>
                                                                 <i>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}</i><br>
                                                                 <b>Status :</b> {!! $item->isPublish === 1 ? '<i class="text-success">Publish</i>' : '<i class="text-danger">Draft</i>' !!}</> <br>
@@ -56,10 +55,10 @@
                                                                 <a href="#" target="_blank"
                                                                     class="btn btn-sm btn-mat waves-effect waves-light btn-info mx-1 ">Lihat
                                                                 </a>
-                                                                <a href="{{ route('post.edit', $item->id) }}"
+                                                                <a href="{{ route('scholarship.edit', $item->id) }}"
                                                                     class="btn btn-sm btn-mat waves-effect waves-light btn-warning text-dark">Edit</a>
                                                                 <form method="post"
-                                                                    action="{{ route('post.destroy', $item->id) }}"
+                                                                    action="{{ route('scholarship.destroy', $item->id) }}"
                                                                     onsubmit="return confirm('Apakah anda yakin menghapus data ini ?');">
                                                                     @csrf
                                                                     @method('DELETE')

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nim');
             $table->string('nama');
+            $table->string('prodi');
             $table->string('event');
             $table->string('penyelenggara');
             $table->string('tempat');
