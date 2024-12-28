@@ -38,7 +38,7 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        <form action="{{ route('category.store') }}" method="post">
+                                        <form action="{{ route('categories.store') }}" method="post">
                                             @csrf
                                             <div class="form-group @error('name') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
@@ -55,7 +55,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-sm btn-grd-info">simpan</button>
-                                            <a href="{{route('category.index')}}" class="btn btn-sm btn-grd-secondary" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
+                                            <a href="{{route('categories.index')}}" class="btn btn-sm btn-grd-secondary" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
                                         </form>
                                     </div>
                                 </div>

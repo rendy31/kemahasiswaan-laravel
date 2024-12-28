@@ -14,6 +14,6 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         // Generate 10 artikel dummy
-        Post::factory()->count(50)->create();
+        Post::factory()->count(6)->create();
     }
 }

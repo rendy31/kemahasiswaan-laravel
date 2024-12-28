@@ -2,16 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class scholarship extends Model
+class Scholarship extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'slug', 'thumbnail', 'content', 'isPublish', 'user_id'];
+    protected $fillable = ['title', 'slug', 'attachment', 'content'];
 
-    public function getRouteKeyName()
+    // Generate slug from title automatically
+    public static function boot()
     {
-        return 'slug';
+        parent::boot();
+        static::creating(function ($scholarship) {
+            $scholarship->slug = Str::slug($scholarship->title);
+        });
+
+        static::updating(function ($scholarship) {
+            $scholarship->slug = Str::slug($scholarship->title);
+        });
     }
 }

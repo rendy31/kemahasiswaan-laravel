@@ -2,17 +2,16 @@
 @section('content')
 
 <!-- Page Title -->
-<div class="page-title dark-background" style="background-image: url('{{ url('assets/frontend/img/page-title-bg.webp') }}')"
->
+<div class="page-title dark-background" style="background-image: url('{{ url('assets/frontend/img/page-title-bg.webp') }}')">
     <div class="container position-relative">
-      <h1>Blog Kegiatan Mahasiswa Detail</h1>
+      <h1>Artikel Detail</h1>
       {{-- <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam molestias.</p> --}}
-      <nav class="breadcrumbs">
+      {{-- <nav class="breadcrumbs">
         <ol>
           <li><a href="#">Kegiatan Mahasiswa</a></li>
           <li class="current">Kegiatan Mahasiswa Details</li>
         </ol>
-      </nav>
+      </nav> --}}
     </div>
   </div><!-- End Page Title -->
 
@@ -28,21 +27,22 @@
             <article class="article">
 
               <div class="post-img">
-                <img src="{{ Storage::url($studentActivity->thumbnail) }}" class="flex-shrink-0">
+                {{-- <img src="{{ Storage::url($postDetail->thumbnail) }}" class="flex-shrink-0" style="height: 250px;"> --}}
+
               </div>
 
-              <h2 class="title">{{$studentActivity->title}}</h2>
+              <h2 class="d-flex title">{{$postDetail->title}}</h2>
 
               <div class="meta-top">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">{{$studentActivity->user->name}}</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="{{ \Carbon\Carbon::parse($studentActivity->created_at)->translatedFormat('l, d F Y') }}">{{ \Carbon\Carbon::parse($studentActivity->created_at)->translatedFormat('l, d F Y') }}</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">{{$postDetail->user->name}}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="{{ \Carbon\Carbon::parse($postDetail->created_at)->translatedFormat('l, d F Y') }}">{{ \Carbon\Carbon::parse($postDetail->created_at)->translatedFormat('l, d F Y') }}</time></a></li>
                   {{-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">12 Comments</a></li> --}}
                 </ul>
               </div><!-- End meta top -->
 
               <div class="content">
-                {!! $studentActivity->content !!}
+                {!! $postDetail->content !!}
               </div><!-- End studentActivity content -->
 
               <div class="meta-bottom">
@@ -108,13 +108,16 @@
           <div class="recent-posts-widget widget-item">
 
             <h3 class="widget-title">Recent Posts</h3>
-            @foreach ($recentStudentActivity as $item)
+
+           
+
+            @foreach ($recentPosts as $item)
               
             <div class="post-item">
               {{-- <img src="{{url('assets/images/blog/blog-recent-1.jpg')}}" alt="" class="flex-shrink-0"> --}}
-              <img src="{{ Storage::url($item->thumbnail) }}" class="flex-shrink-0">
+              <img src="{{ Storage::url($item->thumbnail) }}" class="img-thumbnail" style="height: 50px;">
               <div>
-                <h4><a href="{{route('kegiatan-mahasiswa.show',$item->slug)}}">{{$item->title}}</a></h4>
+                <h4><a href="{{ route('posts.detail', $item->slug) }}">{{$item->title}}</a></h4>
                 <time datetime="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}">{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}</time>
               </div>
             </div><!-- End recent post item-->

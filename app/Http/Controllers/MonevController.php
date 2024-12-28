@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Monev;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class MonevController extends Controller
@@ -15,7 +14,8 @@ class MonevController extends Controller
      */
     public function index()
     {
-        $monevs = Monev::latest()->paginate(9);
+        //
+        $monevs = Monev::latest()->get();
         return view('backend.monev.index', compact('monevs'));
     }
 
@@ -24,6 +24,7 @@ class MonevController extends Controller
      */
     public function create()
     {
+        //
         return view('backend.monev.create');
     }
 
@@ -32,49 +33,26 @@ class MonevController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data dengan aturan dan pesan khusus
-        $validatedData = $request->validate([
-            'title' => 'required|min:3',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
-            'content' => 'required',
-        ], [
-            'title.required' => 'Judul harus diisi.',
-            'title.min' => 'Judul harus terdiri dari minimal 3 karakter.',
-            'thumbnail.required' => 'Thumbnail harus diunggah.',
-            'thumbnail.image' => 'Thumbnail harus berupa gambar.',
-            'thumbnail.mimes' => 'Thumbnail harus berformat: jpeg, png, jpg, atau gif.',
-            'thumbnail.max' => 'Thumbnail tidak boleh lebih dari 2MB.',
-            'content.required' => 'Konten harus diisi.',
+        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'attachment' => 'required|nullable|file|mimes:pdf,doc,docx|max:10240', // Max 10MB
         ]);
 
-        // Generate slug dari title
-        $validatedData['slug'] = Str::slug($request->title);
-
-        // Tambahkan user_id dari user yang sedang login
-        $validatedData['user_id'] = Auth::User()->id;
-
-        // Set nilai isPublish berdasarkan status checkbox (default ke 0 jika tidak dicentang)
-        $validatedData['isPublish'] = $request->has('isPublish') ? 1 : 0;
-
-        // Upload thumbnail dengan nama yang sesuai slug
-        if ($request->hasFile('thumbnail')) {
-            // Dapatkan ekstensi file asli
-            $extension = $request->file('thumbnail')->getClientOriginalExtension();
-
-            // Buat nama file baru berdasarkan slug dan tambahkan ekstensi
-            $filename = $validatedData['slug'] . '.' . $extension;
-
-            // Simpan file ke direktori 'thumbnails' di storage/public
-            $thumbnailPath = $request->file('thumbnail')->storeAs('thumbnails', $filename, 'public');
-
-            $validatedData['thumbnail'] = $thumbnailPath;
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $fileName = Str::slug($request->title) . '.' . $file->getClientOriginalExtension();
+            $validated['attachment'] = $file->storeAs('monevs', $fileName, 'public');
         }
 
-        // Simpan data ke dalam tabel student-activities
-        Monev::create($validatedData);
-        session()->flash('status', 'SUKSES');
-        session()->flash('pesan', 'Monev Berhasil Ditambahkan');
-        return redirect()->route('monev.index');
+        Monev::create($validated);
+
+        // Pesan sukses dan redirect
+        session()->flash('status', 'SAVED');
+        session()->flash('pesan', 'Monev berhasil disimpan');
+        return redirect()->route('monevs.index');
+    
     }
 
     /**
@@ -90,7 +68,8 @@ class MonevController extends Controller
      */
     public function edit(Monev $monev)
     {
-        return view('backend.monev.edit', ['monev' => $monev]);
+        return view('backend.monev.edit', compact('monev'));
+
     }
 
     /**
@@ -98,50 +77,31 @@ class MonevController extends Controller
      */
     public function update(Request $request, Monev $monev)
     {
-        // Validasi data
-        $validatedData = $request->validate([
-            'title' => 'required|min:3',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // thumbnail tidak wajib diisi
-            'content' => 'required',
-        ], [
-            'title.required' => 'Judul harus diisi.',
-            'title.min' => 'Judul harus terdiri dari minimal 3 karakter.',
-            'thumbnail.image' => 'Thumbnail harus berupa gambar.',
-            'thumbnail.mimes' => 'Thumbnail harus berformat: jpeg, png, jpg, atau gif.',
-            'thumbnail.max' => 'Thumbnail tidak boleh lebih dari 2MB.',
-            'content.required' => 'Konten harus diisi.',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'attachment' => 'nullable|file|mimes:pdf,doc,docx|max:10240', // Max 10MB
         ]);
 
-        // Generate slug dari title
-        $validatedData['slug'] = Str::slug($request->title);
-
-        // Update user_id dan isPublish
-        $validatedData['user_id'] = Auth::user()->id;
-        $validatedData['isPublish'] = $request->has('isPublish') ? 1 : 0;
-
-        // Periksa apakah ada file thumbnail baru yang diunggah
-        if ($request->hasFile('thumbnail')) {
-            // Hapus thumbnail lama jika ada
-            if ($monev->thumbnail && Storage::disk('public')->exists($monev->thumbnail)) {
-                Storage::disk('public')->delete($monev->thumbnail);
+        // Handle attachment
+        if ($request->hasFile('attachment')) {
+            // Hapus file lama jika ada
+            if ($monev->attachment) {
+                Storage::disk('public')->delete($monev->attachment);
             }
 
-            // Simpan thumbnail baru dengan nama sesuai slug
-            $extension = $request->file('thumbnail')->getClientOriginalExtension();
-            $filename = $validatedData['slug'] . '.' . $extension;
-            $thumbnailPath = $request->file('thumbnail')->storeAs('thumbnails', $filename, 'public');
-
-            // Update path thumbnail di database
-            $validatedData['thumbnail'] = $thumbnailPath;
+            $file = $request->file('attachment');
+            $fileName = Str::slug($request->title) . '.' . $file->getClientOriginalExtension();
+            $validated['attachment'] = $file->storeAs('monevs', $fileName, 'public');
         }
 
-        // Update data monev
-        $monev->update($validatedData);
+        $monev->update($validated);
 
         // Pesan sukses dan redirect
         session()->flash('status', 'UPDATED');
-        session()->flash('pesan', 'Monev berhasil diperbarui');
-        return redirect()->route('monev.index');
+        session()->flash('pesan', 'Monevs berhasil diperbarui');
+        return redirect()->route('monevs.index');
+    
     }
 
     /**
@@ -149,14 +109,32 @@ class MonevController extends Controller
      */
     public function destroy(Monev $monev)
     {
-        // Cek jika thumbnail ada dan file tersebut ada di storage
-        if ($monev->thumbnail && Storage::disk('public')->exists($monev->thumbnail)) {
-            // Hapus file thumbnail dari storage
-            Storage::disk('public')->delete($monev->thumbnail);
+        if ($monev->attachment) {
+            Storage::disk('public')->delete($monev->attachment);
         }
+
         $monev->delete();
-        session()->flash('status', 'TERHAPUS');
-        session()->flash('pesan', 'Monev Berhasil Dihapus');
-        return redirect()->route('monev.index');
+
+        // Pesan sukses dan redirect
+        session()->flash('status', 'DELETED');
+        session()->flash('pesan', 'Monev berhasil dihapus');
+        return redirect()->route('monevs.index');
+    
+    }
+
+    public function monevDetail($slug)
+    {
+        // Cari monev berdasarkan slug
+        $monevDetail = Monev::where('slug', $slug)->firstOrFail();
+
+        // monev category kegiatan mahasiswa
+        $recentMonevs = Monev::where('id', '!=', $monevDetail->id) // Kecualikan artikel yang sedang ditampilkan
+                                        ->latest() // Urutkan berdasarkan created_at (terbaru)
+                                        ->take(5) // Ambil 5 artikel
+                                        ->get();
+
+
+        // Kirim data monev ke view
+        return view('frontend.monev-detail', compact('monevDetail','recentMonevs'));
     }
 }

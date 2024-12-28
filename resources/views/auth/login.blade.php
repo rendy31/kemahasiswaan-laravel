@@ -101,7 +101,7 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="text-center">
-                            <img src="{{url('assets/images/logo.png')}}" alt="logo.png">
+                            <img src="{{url('assets/images/logobackend.png')}}" alt="Logo Kemahasiswaan" style="width: 300px;">
                         </div>
                         <div class="auth-box card">
                             <div class="card-block">

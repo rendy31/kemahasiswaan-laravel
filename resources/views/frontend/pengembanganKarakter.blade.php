@@ -3,13 +3,13 @@
     <!-- Page Title -->
     <div class="page-title dark-background" style="background-image: url(assets/frontend/img/page-title-bg.webp);">
         <div class="container position-relative">
-            <h1>Monitoring dan Evaluasi</h1>
+            <h1>Kegiatan Mahasiswa</h1>
             {{-- <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam
                 molestias.</p> --}}
             <nav class="breadcrumbs">
                 <ol>
                     <li><a href="{{route('beranda')}}">Home</a></li>
-                    <li class="current">Monitoring dan Evaluasi</li>
+                    <li class="current">Pengembangan Karakter</li>
                 </ol>
             </nav>
         </div>
@@ -20,26 +20,26 @@
 
         <div class="container">
             <div class="row gy-4">
-                @foreach ($postmonevs as $item)
+                @foreach ($posts as $item)
                     
                 <div class="col-lg-4">
                     <article>
 
-                        {{-- <div class="post-img">
+                        <div class="post-img">
                             <img src="{{ Storage::url($item->thumbnail) }}" class="img-fluid">
-                        </div> --}}
+                        </div>
 
                         {{-- <p class="post-category">{{$item->category->name}}</p> --}}
 
                         <h2 class="title">
-                            <a href="{{ route('monevs.detail', $item->slug) }}">{{$item->title}}</a>
+                            <a href="{{ route('posts.detail', $item->slug) }}">{{$item->title}}</a>
                         </h2>
 
                         <div class="d-flex align-items-center">
                             <img src="{{url('assets/frontend/img/blog/blog-author.jpg')}}" alt=""
                             class="img-fluid post-author-img flex-shrink-0">
                             <div class="post-meta">
-                                {{-- <p class="post-author">{{$item->user->name}}</p> --}}
+                                <p class="post-author">{{$item->user->name}}</p>
                                 <p class="post-date">
                                     <time datetime="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}">{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}</time>
                                 </p>
@@ -51,7 +51,7 @@
                 @endforeach
             </div>
             <div class="d-flex justify-content-center mt-5">
-                {{ $postmonevs->links() }}
+                {{ $posts->links() }}
             </div>
         </div>
 

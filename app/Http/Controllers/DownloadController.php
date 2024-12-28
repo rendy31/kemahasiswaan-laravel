@@ -14,7 +14,7 @@ class DownloadController extends Controller
      */
     public function index()
     {
-        $downloads = Download::orderBy('id', 'DESC')->get();
+        $downloads = Download::latest()->get();
         return view('backend.download.index', compact('downloads'));
     }
 
@@ -23,6 +23,7 @@ class DownloadController extends Controller
      */
     public function create()
     {
+        //
         return view('backend.download.create');
     }
 
@@ -31,49 +32,25 @@ class DownloadController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data dengan aturan dan pesan khusus
-        $validatedData = $request->validate([
-            'title' => 'required|min:3',
-            'description' => 'required|min:3',
-            'file' => 'required|file|max:5000|extensions:jpg,png,jpeg,pdf,doc,docx,xls,xlsx', // max 5MB
-        ], [
-            'title.required' => 'Judul harus diisi.',
-            'title.min' => 'Judul harus terdiri dari minimal 3 karakter.',
-            'description.required' => 'Deskripsi harus diisi.',
-            'description.min' => 'Deskripsi harus terdiri dari minimal 3 karakter.',
-            'file.required' => 'File harus diunggah.',
-            'file.max' => 'File tidak boleh lebih dari 10 MB.',
-            'file.extensions' => 'Jenis file harus berupa: jpg, jpeg, png, pdf, doc, atau docx.',
-            'file.file' => 'Jenis file harus Valid',
+        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'attachment' => 'required|file|mimes:pdf,doc,docx|max:10240', // 10MB
         ]);
-       
 
-        // Generate slug dari title tapi tidak disimpan ke dbase
-        $slug = Str::slug($request->title);
+        // Rename the attachment to the slug
+        $attachment = $request->file('attachment');
+        $attachmentName = Str::slug($request->title) . '.' . $attachment->getClientOriginalExtension();
+        $validated['attachment'] = $attachment->storeAs('downloads', $attachmentName, 'public');
 
-        // Tambahkan user_id dari user yang sedang login
-        // $validatedData['user_id'] = Auth::User()->id;
+        Download::create($validated);
 
-
-        // Upload file dengan nama yang sesuai slug
-        if ($request->hasFile('file')) {
-            // Dapatkan ekstensi file asli
-            $extension = $request->file('file')->getClientOriginalExtension();
-
-            // Buat nama file baru berdasarkan slug dan tambahkan ekstensi
-            $filename = $slug . '.' . $extension;
-
-            // Simpan file ke direktori 'files' di storage/public
-            $filePath = $request->file('file')->storeAs('files', $filename, 'public');
-
-            $validatedData['file'] = $filePath;
-        }
-
-        // Simpan data ke dalam tabel downloads
-        Download::create($validatedData);
-        session()->flash('status', 'SUKSES');
-        session()->flash('pesan', 'File Download Berhasil Ditambahkan');
-        return redirect()->route('download.index');
+        // Pesan sukses dan redirect
+        session()->flash('status', 'SAVED');
+        session()->flash('pesan', 'Download berhasil dihapus');
+        return redirect()->route('downloads.index');
+    
     }
 
     /**
@@ -89,7 +66,8 @@ class DownloadController extends Controller
      */
     public function edit(Download $download)
     {
-        return view('backend.download.edit', ['download' => $download]);
+        //
+        return view('backend.download.edit', compact('download'));
     }
 
     /**
@@ -97,51 +75,32 @@ class DownloadController extends Controller
      */
     public function update(Request $request, Download $download)
     {
-        // Validasi data
-        $validatedData = $request->validate([
-            'title' => 'required|min:3',
-            'description' => 'required|min:3',
-            'file' => 'file|max:5000|extensions:jpg,png,jpeg,pdf,doc,docx,xls,xlsx', // max 5MB
-        ], [
-            'title.required' => 'Judul harus diisi.',
-            'title.min' => 'Judul harus terdiri dari minimal 3 karakter.',
-            'description.required' => 'Deskripsi harus diisi.',
-            'description.min' => 'Deskripsi harus terdiri dari minimal 3 karakter.',
-            'file.max' => 'File tidak boleh lebih dari 10 MB.',
-            'file.extensions' => 'Jenis file harus berupa: jpg, jpeg, png, pdf, doc, atau docx.',
-            'file.file' => 'Jenis file harus Valid',
+        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'attachment' => 'nullable|file|mimes:pdf,doc,docx|max:10240', // 10MB
         ]);
 
-        // Generate slug dari title
-        $slug = Str::slug($request->title);
-
-        // Update user_id dan isPublish
-        // $validatedData['user_id'] = Auth::user()->id;
-        // $validatedData['isPublish'] = $request->has('isPublish') ? 1 : 0;
-
-        // Periksa apakah ada file thumbnail baru yang diunggah
-        if ($request->hasFile('file')) {
-            // Hapus thumbnail lama jika ada
-            if ($download->file && Storage::disk('public')->exists($download->file)) {
-                Storage::disk('public')->delete($download->file);
+        // Handle attachment
+        if ($request->hasFile('attachment')) {
+            // Hapus file lama jika ada
+            if ($download->attachment) {
+                Storage::disk('public')->delete($download->attachment);
             }
-
-            // Simpan thumbnail baru dengan nama sesuai slug
-            $extension = $request->file('file')->getClientOriginalExtension();
-            $filename = $slug . '.' . $extension;
-            $filePath = $request->file('file')->storeAs('files', $filename, 'public');
-
-            // Update path thumbnail di database
-            $validatedData['file'] = $filePath;
+            // Rename the new attachment to the slug
+            $attachment = $request->file('attachment');
+            $attachmentName = Str::slug($request->title) . '.' . $attachment->getClientOriginalExtension();
+            $validated['attachment'] = $attachment->storeAs('downloads', $attachmentName, 'public');
         }
 
-        // Update data post
-        $download->update($validatedData);
+        $download->update($validated);
 
         // Pesan sukses dan redirect
         session()->flash('status', 'UPDATED');
         session()->flash('pesan', 'Download berhasil diperbarui');
-        return redirect()->route('download.index');
+        return redirect()->route('downloads.index');
+    
     }
 
     /**
@@ -149,26 +108,17 @@ class DownloadController extends Controller
      */
     public function destroy(Download $download)
     {
-        // Cek jika file ada dan file tersebut ada di storage
-        if ($download->file && Storage::disk('public')->exists($download->file)) {
-            // Hapus file file dari storage
-            Storage::disk('public')->delete($download->file);
+        //
+        if ($download->attachment) {
+            Storage::disk('public')->delete($download->attachment);
         }
+
         $download->delete();
-        session()->flash('status', 'TERHAPUS');
-        session()->flash('pesan', 'File Download Berhasil Dihapus');
-        return redirect()->route('download.index');
-    }
 
-    public function download($filename)
-    {
-        $path = 'public/files/' . $filename;  // Mengakses file di dalam storage/app/public/files
-
-        // Cek apakah file ada
-        if (Storage::exists($path)) {
-            return Storage::download($path);  // Men-download file
-        } else {
-            return abort(404, 'File tidak ditemukan.');  // Menampilkan 404 jika file tidak ada
-        }
+        // Pesan sukses dan redirect
+        session()->flash('status', 'DELETED');
+        session()->flash('pesan', 'Download berhasil dihapus');
+        return redirect()->route('downloads.index');
+    
     }
 }

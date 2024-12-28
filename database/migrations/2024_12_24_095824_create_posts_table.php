@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
-            $table->text('slug');
-            $table->text('thumbnail');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->string('thumbnail')->nullable(); // Tidak wajib diisi
+            $table->unsignedBigInteger('category_id'); // Relasi ke Category
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id'); // Relasi ke User
             $table->longText('content');
-            $table->boolean('isPublish')->default(1);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->boolean('isPublish')->default(1); // Default Publish
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        <form action="{{ route('scholarship.update',['scholarship'=>$scholarship->id]) }}" method="post"
+                                        <form action="{{ route('scholarships.update',$scholarship->id) }}" method="post"
                                             enctype="multipart/form-data">
                                             @method('PUT')
                                             @csrf
@@ -31,19 +31,30 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="form-group @error('thumbnail') has-danger @enderror row">
+                                            
+                                            <div class="form-group @error('attachment') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">thumbnail</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Lampiran</label>
                                                 <div class="col-sm-10">
                                                     <input type="file"
-                                                        class="form-control form-control-sm @error('thumbnail') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="thumbnail">
-                                                    @error('thumbnail')
+                                                        class="form-control form-control-sm @error('attachment') form-control-danger @enderror"
+                                                        id="colFormLabelSm" name="attachment">
+                                                    @error('attachment')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
-                                                    <img src="{{ Storage::url($scholarship->thumbnail) }}" class="img-fluid img-thumbnail w-25 mt-1" >
+                                                    <div class="mb-2">
+                                                        @if ($scholarship->attachment)
+                                                            <a href="{{ asset('storage/' . $scholarship->attachment) }}" target="_blank" class="btn btn-sm btn-info">Lihat Lampiran</a>
+                                                        @else
+                                                            <p class="text-muted">No attachment available.</p>
+                                                        @endif
+                                                    </div>
+                                                    {{-- <a href="{{ Storage::url('scholarships/' . $scholarship->attachment) }}" target="_blank" class="btn btn-primary mt-1">
+                                                        Lihat Lampiran
+                                                    </a> --}}
+                                                    
                                                 </div>
                                             </div>
                                             <div class="form-group @error('content') has-danger @enderror row">
@@ -65,7 +76,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-sm btn-grd-info">update</button>
-                                            <a href="{{route('kegiatan-mahasiswa.index')}}" class="btn btn-sm btn-grd-secondary" type="reset" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
+                                            <a href="{{route('scholarships.index')}}" class="btn btn-sm btn-grd-secondary" type="reset" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
                                         </form>
                                     </div>
                                 </div>

@@ -26,6 +26,10 @@
     <link href="{{url('assets/frontend/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
     <link href="{{url('assets/frontend/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
 
+    {{-- DATATABLES --}}
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.dataTables.css" rel="stylesheet">
+
     <!-- Main CSS File -->
     <link href="{{url('assets/frontend/css/main.css')}}" rel="stylesheet">
 
@@ -83,18 +87,18 @@
                                 </ul>
                             </li>
                             <li><a href="{{route('kegiatanMhs')}}">Keg. Mahasiswa</a></li>
-                            <li><a href="#">Pengembangan Karakter</a></li>
-                            <li><a href="#">Asrama</a></li>
+                            <li><a href="{{route('pengembanganKarakter')}}">Pengembangan Karakter</a></li>
+                            <li><a href="{{route('asrama')}}">Asrama</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Beasiswa</a></li>
+                    <li><a href="{{route('beasiswa')}}">Beasiswa</a></li>
                     <li><a href="{{route('prestasi')}}" class="{{request()->routeIs(['prestasi', 'prestasiProvinsi', 'prestasiNasional', 'prestasiInternasional']) ? 'active':''}}">Prestasi</a></li>
                     <li class="dropdown"><a href="#" {{request()->routeIs('downloadfile') ? 'active':''}}"><span>Layanan</span>
                             <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li><a href="https://bimsel.stikessuakainsan.ac.id" target="blank">Bimbingan Konseling</a></li>
                             <li><a href="https://cc.stikessuakainsan.ac.id" target="blank">Carier Center</a></li>
-                            <li><a href="{{route('downloadfile')}}" >Download</a></li>
+                            <li><a href="{{route('unduh')}}" >Download</a></li>
                         </ul>
                     </li>
                     <li><a href="{{route('blog')}}" class="{{request()->routeIs('blog') ? 'active':''}}">Blog</a></li>
@@ -205,6 +209,35 @@
     {{-- CHART JS --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {{-- CHART JS SCRIPT --}}
+    
+    <!-- Required Jquery -->
+    <script type="text/javascript" src="{{ url('assets/js/jquery/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('assets/js/jquery-ui/jquery-ui.min.js') }} "></script>
+    {{-- <script type="text/javascript" src="{{ url('assets/js/popper.js/popper.min.js') }}"></script> --}}
+
+    {{-- DATATABLES --}}
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
+
+    {{-- DATATABLES SCRIPT --}}
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                responsive: true,
+                columnDefs: [{
+                        responsivePriority: 1,
+                        targets: 0
+                    },
+                    {
+                        responsivePriority: 2,
+                        targets: -1
+                    }
+                ]
+            });
+        });
+    </script>
+
     @yield('scripts')
     
 </body>

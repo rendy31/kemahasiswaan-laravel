@@ -13,7 +13,7 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        <form action="{{ route('kegiatan-mahasiswa.store') }}" method="post"
+                                        <form action="{{ route('monevs.store') }}" method="post"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group @error('title') has-danger @enderror row">
@@ -30,14 +30,15 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="form-group @error('thumbnail') has-danger @enderror row">
+                                            
+                                            <div class="form-group @error('attachment') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">thumbnail</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Lampiran</label>
                                                 <div class="col-sm-10">
                                                     <input type="file"
-                                                        class="form-control form-control-sm @error('thumbnail') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="thumbnail">
-                                                    @error('thumbnail')
+                                                        class="form-control form-control-sm @error('attachment') form-control-danger @enderror"
+                                                        id="colFormLabelSm" name="attachment">
+                                                    @error('attachment')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -54,12 +55,7 @@
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
-                                                    <div class="col-sm-10 form-check form-switch mt-2">
-                                                        <input name="isPublish" class="form-check-input" type="checkbox"
-                                                            role="switch" id="flexSwitchCheckChecked" checked>
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked">Publish
-                                                            ?</label>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-sm btn-grd-info">simpan</button>

@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('monevs', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
-            $table->text('slug');
-            $table->text('thumbnail');
-            $table->longText('content');
-            $table->boolean('isPublish')->default(1);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->string('attachment')->nullable();
+            $table->text('content');
             $table->timestamps();
         });
     }

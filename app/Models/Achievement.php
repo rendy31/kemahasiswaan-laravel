@@ -5,8 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Achievement extends Model
+class achievement extends Model
 {
     use HasFactory;
-    protected $fillable =['nim','nama','prodi','penyelenggara','tempat','tglMulai','tglAkhir','namaPenghargaan','peringkat','level','file'];
+    protected $fillable = [
+        'nim',
+        'nama',
+        'prodi',
+        'event',
+        'penyelenggara',
+        'tempat',
+        'tglMulai',
+        'tglAkhir',
+        'kategoriPenghargaan',
+        'peringkat',
+        'level',
+        'attachment',
+    ];
 }

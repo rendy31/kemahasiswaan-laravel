@@ -32,7 +32,7 @@
                                                         <th class="w-5">Thumbnail</th>
                                                         <th class="col-md-8">Post</th>
                                                         <th class="justify-content-center align-items-center"><a
-                                                                href="{{ route('post.create') }}"
+                                                                href="{{ route('posts.create') }}"
                                                                 class="btn btn-sm btn-mat waves-effect waves-light btn-primary">Tambah
                                                                 Post</a></th>
                                                     </tr>
@@ -42,7 +42,7 @@
                                                         <tr>
                                                             <th class="align-middle">{{ $loop->iteration }}</th>
                                                             <td class="align-middle"><img src="{{ Storage::url($item->thumbnail) }}"
-                                                                    class="img-fluid img-thumbnail"></td>
+                                                                    class="img-fluid img-thumbnail" width="50"></td>
                                                             <td>
                                                                 {{ $item->title }} <br>
                                                                 <b>Publisher :</b> <i>{{ $item->user->name }}</i> <br>
@@ -56,15 +56,15 @@
                                                                 <a href="#" target="_blank"
                                                                     class="btn btn-sm btn-mat waves-effect waves-light btn-info mx-1 ">Lihat
                                                                 </a>
-                                                                <a href="{{ route('post.edit', $item->id) }}"
+                                                                <a href="{{ route('posts.edit', $item->id) }}"
                                                                     class="btn btn-sm btn-mat waves-effect waves-light btn-warning text-dark">Edit</a>
                                                                 <form method="post"
-                                                                    action="{{ route('post.destroy', $item->id) }}"
+                                                                    action="{{ route('posts.destroy', $item->id) }}"
                                                                     onsubmit="return confirm('Apakah anda yakin menghapus data ini ?');">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="submit"
-                                                                        class=" btn btn-sm btn-mat waves-effect waves-light btn-danger mx-1 ">Hapus</button>
+                                                                        class=" btn btn-sm btn-mat waves-effect waves-light btn-danger mx-1 " >Hapus</button>
                                                                 </form>
                                                             </td>
                                                         </tr>

@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('tempat');
             $table->date('tglMulai');
             $table->date('tglAkhir');
-            $table->string('namaPenghargaan');
+            $table->string('kategoriPenghargaan');
             $table->string('peringkat');
             $table->string('level');
-            $table->string('file')->nullable();
+            $table->string('attachment')->nullable();
             $table->timestamps();
         });
     }

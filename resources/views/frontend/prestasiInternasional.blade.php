@@ -28,16 +28,16 @@
             {{-- <h3>Daftar Prestasi Mahasiswa</h3> --}}
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="{{route('prestasi')}}">Regional</a>
+                    <a class="nav-link " aria-current="page" href="{{ route('prestasi') }}">Regional</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="{{route('prestasiProvinsi')}}">Provinsi</a>
+                    <a class="nav-link " href="{{ route('prestasiProvinsi') }}">Provinsi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="{{route('prestasiNasional')}}">Nasional</a>
+                    <a class="nav-link " href="{{ route('prestasiNasional') }}">Nasional</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{route('prestasiInternasional')}}">Internasional</a>
+                    <a class="nav-link active" href="{{ route('prestasiInternasional') }}">Internasional</a>
                 </li>
             </ul>
             <hr>
@@ -61,10 +61,14 @@
                                 @foreach ($data as $prodi => $rekap)
                                     <tr>
                                         <td>{{ $prodi }}</td>
-                                        <td>{{ $rekap['Juara 1'] }}</td>
-                                        <td>{{ $rekap['Juara 2'] }}</td>
-                                        <td>{{ $rekap['Juara 3'] }}</td>
-                                        <td>{{ $rekap['Juara Harapan'] }}</td>
+                                        @foreach ($peringkat as $j)
+                                            <td>
+                                                <a
+                                                    href="{{ route('prestasi.mahasiswa', ['prodi' => $prodi, 'peringkat' => $j, 'level' => 'Internasional']) }}">
+                                                    {{ $rekap[$j] }}
+                                                </a>
+                                            </td>
+                                        @endforeach
                                     </tr>
                                 @endforeach
 
@@ -78,8 +82,6 @@
         </div>
 
     </section><!-- /Starter Section Section -->
-
-    
 @endsection
 
 @section('scripts')

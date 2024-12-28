@@ -14,7 +14,7 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        <form action="{{ route('download.store') }}" method="post" enctype="multipart/form-data">
+                                        <form action="{{ route('downloads.store') }}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group @error('title') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
@@ -44,14 +44,14 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="form-group @error('file') has-danger @enderror row">
+                                            <div class="form-group @error('attachment') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">File</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Attachment</label>
                                                 <div class="col-sm-10">
                                                     <input type="file"
-                                                        class="form-control form-control-sm @error('file') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="file">
-                                                    @error('file')
+                                                        class="form-control form-control-sm @error('attachment') form-control-danger @enderror"
+                                                        id="colFormLabelSm" name="attachment">
+                                                    @error('attachment')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -59,7 +59,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-sm btn-mat waves-effect waves-light btn-info">simpan</button>
-                                            <a href="{{ route('download.index') }}"
+                                            <a href="{{ route('downloads.index') }}"
                                                 class="btn btn-sm btn-mat waves-effect waves-light btn-secondary" >Batal & Kembali</a>
                                         </form>
                                     </div>

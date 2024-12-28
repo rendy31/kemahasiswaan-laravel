@@ -20,7 +20,7 @@
 
         <div class="container">
             <div class="row gy-4">
-                @foreach ($activities as $item)
+                @foreach ($posts as $item)
                     
                 <div class="col-lg-4">
                     <article>
@@ -32,7 +32,7 @@
                         {{-- <p class="post-category">{{$item->category->name}}</p> --}}
 
                         <h2 class="title">
-                            <a href="blog-details.html">{{$item->title}}</a>
+                            <a href="{{ route('posts.detail', $item->slug) }}">{{$item->title}}</a>
                         </h2>
 
                         <div class="d-flex align-items-center">
@@ -51,7 +51,7 @@
                 @endforeach
             </div>
             <div class="d-flex justify-content-center mt-5">
-                {{ $activities->links() }}
+                {{ $posts->links() }}
             </div>
         </div>
 

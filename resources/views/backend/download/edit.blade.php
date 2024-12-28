@@ -13,7 +13,7 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        <form action="{{ route('download.update',['download'=>$download->id]) }}" method="post"
+                                        <form action="{{ route('downloads.update',$download->id) }}" method="post"
                                             enctype="multipart/form-data">
                                             @method('PUT')
                                             @csrf
@@ -45,14 +45,22 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="form-group @error('file') has-danger @enderror row">
+                                            <div class="form-group @error('attachment') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">file</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Attachment</label>
+                                                    <div class="mb-2">
+                                                        @if ($download->attachment)
+                                                            <a href="{{ asset('storage/' . $download->attachment) }}" target="_blank" class="btn btn-sm btn-info">Lihat Lampiran</a>
+                                                        @else
+                                                            <p class="text-muted">Tidak ada lampiran</p>
+                                                        @endif
+                                                    </div>
                                                 <div class="col-sm-10">
                                                     <input type="file"
-                                                        class="form-control form-control-sm @error('file') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="file">
-                                                    @error('file')
+                                                        class="form-control form-control-sm @error('attachment') form-control-danger @enderror"
+                                                        id="colFormLabelSm" name="attachment">
+                                                        <small class="text-muted">Leave blank to keep the current attachment.</small>
+                                                    @error('attachment')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -61,7 +69,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-sm btn-grd-info">update</button>
-                                            <a href="{{route('download.index')}}" class="btn btn-sm btn-grd-secondary" type="reset" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
+                                            <a href="{{route('downloads.index')}}" class="btn btn-sm btn-grd-secondary" type="reset" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
                                         </form>
                                     </div>
                                 </div>

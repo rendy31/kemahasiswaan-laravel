@@ -29,12 +29,13 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="w-1">No</th>
-                                                        <th >Title</th>
-                                                        <th >Description</th>
-                                                        <th >File</th>
+                                                        <th>Title</th>
+                                                        <th>Description</th>
+                                                        <th>Attachment</th>
                                                         <th class="col d-flex justify-content-center"><a
-                                                                href="{{ route('download.create') }}"
-                                                                class="btn btn-sm btn-mat waves-effect waves-light btn-primary ">Upload File</a></th>
+                                                                href="{{ route('downloads.create') }}"
+                                                                class="btn btn-sm btn-mat waves-effect waves-light btn-primary ">Upload
+                                                                File</a></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -44,15 +45,20 @@
                                                             <td>{{ $item->title }}</td>
                                                             <td>{{ $item->description }}</td>
                                                             <td>
-
-                                                                <a href="{{ route('file.download', ['filename' => $item->file]) }}" class="btn btn-sm btn-mat waves-effect waves-light btn-outline-info">Download</a>
+                                                                @if ($item->attachment)
+                                                                    <a href="{{ asset('storage/' . $item->attachment) }}"
+                                                                        target="_blank" class="btn btn-sm btn-mat waves-effect waves-light btn-outline-info">Download</a>
+                                                                @else
+                                                                    None
+                                                                @endif
+                                                                
                                                             </td>
                                                             <td class="d-flex">
-                                                                <a href="{{ route('download.edit', $item->id) }}"
+                                                                <a href="{{ route('downloads.edit', $item->id) }}"
                                                                     class="text-dark btn btn-sm btn-mat waves-effect waves-light btn-warning mx-1">Edit</a>
 
                                                                 <form method="post"
-                                                                    action="{{ route('download.destroy', $item->id) }}"
+                                                                    action="{{ route('downloads.destroy', $item->id) }}"
                                                                     onsubmit="return confirm('Apakah anda yakin menghapus data ini ?');">
                                                                     @csrf
                                                                     @method('DELETE')

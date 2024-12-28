@@ -13,7 +13,7 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        <form action="{{ route('post.update',['post'=>$post->id]) }}" method="post"
+                                        <form action="{{ route('posts.update', $post->id) }}" method="post"
                                             enctype="multipart/form-data">
                                             @method('PUT')
                                             @csrf
@@ -23,7 +23,8 @@
                                                 <div class="col-sm-10">
                                                     <input type="text"
                                                         class="form-control form-control-sm @error('title') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="title" value="{{ old('title') ?? $post->title }}">
+                                                        id="colFormLabelSm" name="title"
+                                                        value="{{ old('title') ?? $post->title }}">
                                                     @error('title')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
@@ -43,7 +44,14 @@
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
-                                                    <img src="{{ Storage::url($post->thumbnail) }}" class="img-fluid img-thumbnail w-25 mt-1" >
+                                                    {{-- <img src="{{ Storage::url($post->thumbnail) }}"
+                                                        class="img-fluid img-thumbnail w-25 mt-1"> --}}
+                                                    @if ($post->thumbnail)
+                                                        <div class="mb-2">
+                                                            <img src="{{ asset('storage/' . $post->thumbnail) }}"
+                                                                alt="Current Thumbnail" width="100">
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="form-group @error('category') has-danger @enderror row">
@@ -53,7 +61,8 @@
                                                     <select name="category_id" class="form-control form-control-sm">
                                                         <option disabled selected>== Pilih Kategori ==</option>
                                                         @foreach ($categories as $item)
-                                                            <option value="{{ $item->id }}" {{ $post->category_id == $item->id ? 'selected' : '' }}>
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $post->category_id == $item->id ? 'selected' : '' }}>
                                                                 {{ $item->name }}
                                                             </option>
                                                         @endforeach
@@ -72,14 +81,16 @@
                                                     @enderror
                                                     <div class="col-sm-10 form-check form-switch mt-2">
                                                         <input name="isPublish" class="form-check-input" type="checkbox"
-                                                            role="switch" id="flexSwitchCheckChecked" {{$post->isPublish == 1 ? 'checked':''}}>
+                                                            role="switch" id="flexSwitchCheckChecked"
+                                                            {{ $post->isPublish == 1 ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="flexSwitchCheckChecked">Publish
                                                             ?</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-sm btn-grd-info">update</button>
-                                            <a href="{{route('post.index')}}" class="btn btn-sm btn-grd-secondary" type="reset" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
+                                            <a href="{{ route('posts.index') }}" class="btn btn-sm btn-grd-secondary"
+                                                type="reset" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
                                         </form>
                                     </div>
                                 </div>

@@ -19,7 +19,7 @@
                                 @endif
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5>Kategory</h5>
+                                        <h5>Kategori</h5>
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
@@ -29,9 +29,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="w-5">No</th>
-                                                        <th class="col">Nama Kategory</th>
+                                                        <th class="col">Nama Kategori</th>
                                                         <th class="col d-flex justify-content-center"><a
-                                                                href="{{ route('category.create') }}"
+                                                                href="{{ route('categories.create') }}"
                                                                 class="btn btn-sm btn-mat waves-effect waves-light btn-primary ">Tambah
                                                                 Kategori</a></th>
                                                     </tr>
@@ -42,11 +42,11 @@
                                                             <th scope="row">{{ $loop->iteration }}</th>
                                                             <td>{{ $item->name }}</td>
                                                             <td class="d-flex">
-                                                                <a href="{{ route('category.edit', $item->id) }}"
+                                                                <a href="{{ route('categories.edit', $item->id) }}"
                                                                     class="text-dark btn btn-sm btn-mat waves-effect waves-light btn-warning mx-1">Edit</a>
                                                                 
                                                                 <form method="post"
-                                                                    action="{{route('category.destroy',$item->id)}}"
+                                                                    action="{{route('categories.destroy',$item->id)}}"
                                                                     onsubmit="return confirm('Apakah anda yakin menghapus data ini ?');">
                                                                     @csrf
                                                                     @method('DELETE')

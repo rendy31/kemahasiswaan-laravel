@@ -8,7 +8,7 @@
                 molestias.</p> --}}
             <nav class="breadcrumbs">
                 <ol>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Home</a></li>
                     <li class="current">Prestasi</li>
                 </ol>
             </nav>
@@ -61,10 +61,14 @@
                                 @foreach ($data as $prodi => $rekap)
                                     <tr>
                                         <td>{{ $prodi }}</td>
-                                        <td>{{ $rekap['Juara 1'] }}</td>
-                                        <td>{{ $rekap['Juara 2'] }}</td>
-                                        <td>{{ $rekap['Juara 3'] }}</td>
-                                        <td>{{ $rekap['Juara Harapan'] }}</td>
+                                        @foreach ($peringkat as $j)
+                                            <td>
+                                                <a
+                                                    href="{{ route('prestasi.mahasiswa', ['prodi' => $prodi, 'peringkat' => $j, 'level' => 'Regional']) }}">
+                                                    {{ $rekap[$j] }}
+                                                </a>
+                                            </td>
+                                        @endforeach
                                     </tr>
                                 @endforeach
 

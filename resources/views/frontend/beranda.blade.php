@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-        <img src="assets/frontend/img/hero-bg.jpg" alt="" data-aos="fade-in">
+        <img src="{{url('assets/frontend/img/hero-bg.jpg')}}" alt="" data-aos="fade-in">
 
         <div class="container text-center" data-aos="fade-up" data-aos-delay="100">
             <div class="row justify-content-center">
@@ -46,25 +46,25 @@
                     <div class="row gy-4">
 
                         <div class="col-md-6 icon-box position-relative">
-                            <i class="bi bi-briefcase"></i>
+                            {{-- <i class="bi bi-briefcase"></i> --}}
                             <h4><a href="" class="stretched-link">Melangkah untuk Kesehatan Bangsa</a></h4>
                             <p>Mencerminkan komitmen mahasiswa untuk memajukan kesehatan masyarakat.</p>
                         </div><!-- Icon-Box -->
 
                         <div class="col-md-6 icon-box position-relative">
-                            <i class="bi bi-gem"></i>
+                            {{-- <i class="bi bi-gem"></i> --}}
                             <h4><a href="" class="stretched-link">Generasi Sehat dan Berintegritas</a></h4>
                             <p>Membentuk tenaga kesehatan yang kompeten dan bermoral tinggi</p>
                         </div><!-- Icon-Box -->
 
                         <div class="col-md-6 icon-box position-relative">
-                            <i class="bi bi-broadcast"></i>
+                            {{-- <i class="bi bi-broadcast"></i> --}}
                             <h4><a href="" class="stretched-link">Dari Kampus ke Dunia Kesehatan</a></h4>
                             <p>Mahasiswa siap berkontribusi di tingkat lokal, nasional, dan global</p>
                         </div><!-- Icon-Box -->
 
                         <div class="col-md-6 icon-box position-relative">
-                            <i class="bi bi-easel"></i>
+                            {{-- <i class="bi bi-easel"></i> --}}
                             <h4><a href="" class="stretched-link">Profesional dan Humanis</a></h4>
                             <p>Mengutamakan ilmu dan empati dalam pelayanan kesehatan</p>
                         </div><!-- Icon-Box -->
@@ -101,7 +101,8 @@
 
                 <div class="col-xl-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
                     <div class="service-item position-relative">
-                        <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
+                        {{-- <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div> --}}
+                        <div class="icon"><i class="bi bi-chat-right-quote icon"></i></div>
                         <h4><a href="https://bimsel.stikessuakainsan.ac.id" class="stretched-link">Bimbingan Konseling</a></h4>
                         <p>membantu mahasiswa mengatasi masalah pribadi, akademik, dan sosial,</p>
                     </div>
@@ -109,7 +110,7 @@
 
                 <div class="col-xl-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
                     <div class="service-item position-relative">
-                        <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
+                        <div class="icon"><i class="bi bi-briefcase icon"></i></div>
                         <h4><a href="https://cc.stikessuakainsan.ac.id" class="stretched-link">Pusat Karir</a></h4>
                         <p>mempersiapkan mahasiswa untuk memasuki dunia kerja melalui pelatihan dan layanan
                             penempatan kerja.</p>
@@ -117,8 +118,8 @@
                 </div><!-- End Service Item -->
                 <div class="col-xl-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
                     <div class="service-item position-relative">
-                        <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
-                        <h4><a href="{{route('scholarship.index')}}" class="stretched-link">Beasiswa</a></h4>
+                        <div class="icon"><i class="bi bi-cash-stack icon"></i></div>
+                        <h4><a href="{{route('scholarships.index')}}" class="stretched-link">Beasiswa</a></h4>
                         <p>Unit Kemahasiswaan menyediakan berbagai program beasiswa untuk mendukung mahasiswa berprestasi dan membutuhkan bantuan finansial.</p>
                     </div>
                 </div><!-- End Service Item -->
@@ -148,7 +149,9 @@
                             <a class="nav-link active " aria-current="page" href="#">Kegiatan Mahasiswa</a>
                             <ul class="list-group list-group-flush">
                                 @foreach ($postsKegiatanMhs as $item)
-                                    <li class="list-group-item"><a  href="{{route('kegiatan-mahasiswa.show', $item->slug)}}" target="_blank" >{{$item->title}}</a></li>
+                                    <li class="list-group-item"><a  
+                                        href="{{ route('posts.detail', $item->slug) }}"
+                                        target="_blank" >{{$item->title}}</a></li>
                                 @endforeach
                             </ul>
                         </li>
@@ -159,8 +162,10 @@
                         <li class="nav-item">
                             <a class="nav-link active mb-3" aria-current="page" href="#">Blog</a>
                             <ul class="list-group list-group-flush">
-                                @foreach ($postsBerita as $item)
-                                    <li class="list-group-item"><a  href="{{route('post.show', $item->slug)}}" target="_blank" >{{$item->title}}</a></li>
+                                @foreach ($postsUmum as $item)
+                                <li class="list-group-item"><a  
+                                    href="{{ route('posts.detail', $item->slug) }}"
+                                    target="_blank" >{{$item->title}}</a></li>
                                 @endforeach
                             </ul>
                         </li>

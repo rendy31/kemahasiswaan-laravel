@@ -13,12 +13,12 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        <form action="{{ route('post.store') }}" method="post"
+                                        <form action="{{ route('posts.store') }}" method="post"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group @error('title') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">Title</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Judul</label>
                                                 <div class="col-sm-10">
                                                     <input type="text"
                                                         class="form-control form-control-sm @error('title') form-control-danger @enderror"
@@ -32,7 +32,7 @@
                                             </div>
                                             <div class="form-group @error('thumbnail') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">thumbnail</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Thumbnail</label>
                                                 <div class="col-sm-10">
                                                     <input type="file"
                                                         class="form-control form-control-sm @error('thumbnail') form-control-danger @enderror"
@@ -42,6 +42,7 @@
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
+                                                    <small class="text-muted">Max size: 2MB. Allowed types: jpg, jpeg, png.</small>
                                                 </div>
                                             </div>
                                             <div class="form-group @error('category') has-danger @enderror row">

@@ -13,7 +13,7 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        <form action="{{ route('monev.update',['monev'=>$monev->id]) }}" method="post"
+                                        <form action="{{ route('monevs.update', $monev->id) }}" method="post"
                                             enctype="multipart/form-data">
                                             @method('PUT')
                                             @csrf
@@ -23,7 +23,8 @@
                                                 <div class="col-sm-10">
                                                     <input type="text"
                                                         class="form-control form-control-sm @error('title') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="title" value="{{ old('title') ?? $monev->title }}">
+                                                        id="colFormLabelSm" name="title"
+                                                        value="{{ old('title') ?? $monev->title }}">
                                                     @error('title')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
@@ -31,19 +32,26 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="form-group @error('thumbnail') has-danger @enderror row">
+
+                                            <div class="form-group @error('attachment') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">thumbnail</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Lampiran</label>
                                                 <div class="col-sm-10">
                                                     <input type="file"
-                                                        class="form-control form-control-sm @error('thumbnail') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="thumbnail">
-                                                    @error('thumbnail')
+                                                        class="form-control form-control-sm @error('attachment') form-control-danger @enderror"
+                                                        id="colFormLabelSm" name="attachment">
+                                                    @error('attachment')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
-                                                    <img src="{{ Storage::url($monev->thumbnail) }}" class="img-fluid img-thumbnail w-25 mt-1" >
+                                                    @if ($monev->attachment)
+                                                        <p>Current Attachment: <a
+                                                                href="{{ asset('storage/' . $monev->attachment) }}"
+                                                                target="_blank" class="btn btn-primary mt-1">View</a></p>
+                                                    @endif
+                                                    
+
                                                 </div>
                                             </div>
                                             <div class="form-group @error('content') has-danger @enderror row">
@@ -56,16 +64,12 @@
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
-                                                    <div class="col-sm-10 form-check form-switch mt-2">
-                                                        <input name="isPublish" class="form-check-input" type="checkbox"
-                                                            role="switch" id="flexSwitchCheckChecked" {{$monev->isPublish == 1 ? 'checked':''}}>
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked">Publish
-                                                            ?</label>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-sm btn-grd-info">update</button>
-                                            <a href="{{route('kegiatan-mahasiswa.index')}}" class="btn btn-sm btn-grd-secondary" type="reset" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
+                                            <a href="{{ route('monevs.index') }}" class="btn btn-sm btn-grd-secondary"
+                                                type="reset" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
                                         </form>
                                     </div>
                                 </div>

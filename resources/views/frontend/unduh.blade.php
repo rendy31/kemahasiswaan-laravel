@@ -26,18 +26,22 @@
 
         <div class="container" data-aos="fade-up">
             <ul class="list-group list-group-flush">
-                @foreach ($downloadfiles as $item)
+                @foreach ($unduh as $item)
                     <li class="list-group-item mb-1">
-                       
+
                         <div class="container">
                             <div class="row">
                                 <div class="col">
                                     {{ $item->title }} <br>
-                                    <i>{{ $item->description }}</i>            
+                                    <i>{{ $item->description }}</i>
                                 </div>
                                 <div class="col ">
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <a href="{{ route('file.download', ['filename' => $item->file]) }}" class="btn btn-sm btn-primary" target="blank" type="button">Download</a>
+                                        @if ($item->attachment)
+                                            <a href="{{ asset('storage/' . $item->attachment) }}" target="_blank"
+                                                class="btn btn-sm btn-mat waves-effect waves-light btn-outline-info">Download</a>
+                                        @endif
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +52,7 @@
             </ul>
         </div>
         <div class="d-flex justify-content-center mt-5">
-            {{ $downloadfiles->links() }}
+            {{ $unduh->links() }}
         </div>
 
     </section><!-- /Starter Section Section -->

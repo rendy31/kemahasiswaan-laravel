@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Achievement;
+use App\Models\achievement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +13,8 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        $achievements = Achievement::all();
+        //
+        $achievements = Achievement::latest()->get();
         return view('backend.achievement.index', compact('achievements'));
     }
 
@@ -22,6 +23,7 @@ class AchievementController extends Controller
      */
     public function create()
     {
+        //
         return view('backend.achievement.create');
     }
 
@@ -30,209 +32,111 @@ class AchievementController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data dengan aturan dan pesan khusus
-        $validatedData = $request->validate([
-            'nim' => 'required|min:3',
-            'nama' => 'required|min:3',
-            'prodi' => 'required|min:3',
-            'event' => 'required|min:3',
-            'penyelenggara' => 'required|min:3',
-            'tempat' => 'required|min:3',
-            'tglMulai' => 'required',
-            'tglAkhir' => 'required',
-            'namaPenghargaan' => 'required|min:3',
-            'peringkat' => 'required|min:3',
-            'level' => 'required|min:3',
-            'file' => 'file|max:5000|mimes:pdf', // max 5MB
-        ], [
-            'nim.required' => 'NIM wajib diisi.',
-            'nim.min' => 'NIM harus terdiri dari minimal 3 karakter.',
-
-            'nama.required' => 'Nama wajib diisi.',
-            'nama.min' => 'Nama harus terdiri dari minimal 3 karakter.',
-            
-            'prodi.required' => 'Prodi wajib diisi.',
-            'prodi.min' => 'Prodi harus terdiri dari minimal 3 karakter.',
-
-            'event.required' => 'event wajib diisi.',
-            'event.min' => 'event harus terdiri dari minimal 3 karakter.',
-
-            'penyelenggara.required' => 'Penyelenggara wajib diisi.',
-            'penyelenggara.min' => 'Penyelenggara harus terdiri dari minimal 3 karakter.',
-
-            'tempat.required' => 'Tempat wajib diisi.',
-            'tempat.min' => 'Tempat harus terdiri dari minimal 3 karakter.',
-
-            'tglMulai.required' => 'Tanggal mulai wajib diisi.',
-
-            'tglAkhir.required' => 'Tanggal akhir wajib diisi.',
-
-            'namaPenghargaan.required' => 'Nama penghargaan wajib diisi.',
-            'namaPenghargaan.min' => 'Nama penghargaan harus terdiri dari minimal 3 karakter.',
-
-            'peringkat.required' => 'Peringkat wajib diisi.',
-            'peringkat.min' => 'Peringkat harus terdiri dari minimal 3 karakter.',
-
-            'level.required' => 'Level wajib diisi.',
-            'level.min' => 'Level harus terdiri dari minimal 3 karakter.',
-
-            'file.file' => 'File yang diunggah harus berupa berkas.',
-            'file.max' => 'Ukuran file maksimal adalah 5MB.',
-            'file.mimes' => 'File harus dalam format PDF.',
+        //
+        $validated = $request->validate([
+            'nim' => 'required|string|max:20',
+            'nama' => 'required|string|max:255',
+            'prodi' => 'required|string|in:PSIK,Fisioterapi,Admistrasi Kesehatan',
+            'event' => 'required|string|max:255',
+            'penyelenggara' => 'required|string|max:255',
+            'tempat' => 'required|string|max:255',
+            'tglMulai' => 'required|date',
+            'tglAkhir' => 'required|date|after_or_equal:tglMulai',
+            'kategoriPenghargaan' => 'required|string|max:255',
+            'peringkat' => 'required|string|in:Juara 1,Juara 2,Juara 3,Juara Harapan',
+            'level' => 'required|string|in:Regional,Provinsi,Nasional,Internasional',
+            'attachment' => 'required|file|mimes:pdf,doc,docx|max:10240', // Max 10MB
         ]);
 
-        // Simpan data ke dalam database
-        $achievement = new Achievement();
-        $achievement->nim = $validatedData['nim'];
-        $achievement->nama = $validatedData['nama'];
-        $achievement->prodi = $validatedData['prodi'];
-        $achievement->event = $validatedData['event'];
-        $achievement->penyelenggara = $validatedData['penyelenggara'];
-        $achievement->tempat = $validatedData['tempat'];
-        $achievement->tglMulai = $validatedData['tglMulai'];
-        $achievement->tglAkhir = $validatedData['tglAkhir'];
-        $achievement->namaPenghargaan = $validatedData['namaPenghargaan'];
-        $achievement->peringkat = $validatedData['peringkat'];
-        $achievement->level = $validatedData['level'];
-
-        // Menyimpan file ke folder "achievements" jika ada file yang di upload
-        if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('public/achievements');
-            $achievement->file = str_replace('public/', 'storage/', $path); // Simpan path agar dapat diakses
+        // Simpan attachment
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $fileName = $request->nim . '_' . $file->getClientOriginalName();
+            $validated['attachment'] = $file->storeAs('achievements', $fileName, 'public');
         }
 
-        // Simpan data ke database
-        $achievement->save();
+        Achievement::create($validated);
 
-        session()->flash('status', 'SUKSES');
-        session()->flash('pesan', 'Data Prestasi Berhasil Ditambahkan');
-        return redirect()->route('achievement.index');
+        // Pesan sukses dan redirect
+        session()->flash('status', 'SAVED');
+        session()->flash('pesan', 'Data Prestasi berhasil disimpan');
+        return redirect()->route('achievements.index');
+    
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Achievement $achievement)
+    public function show(achievement $achievement)
     {
-        
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Achievement $achievement)
+    public function edit(achievement $achievement)
     {
-        return view('backend.achievement.edit', ['achievement' => $achievement]);
+        return view('backend.achievement.edit', compact('achievement'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Achievement $achievement)
+    public function update(Request $request, achievement $achievement)
     {
-        // Validasi data
-        $validatedData = $request->validate([
-            'nim' => 'required|min:3',
-            'nama' => 'required|min:3',
-            'prodi' => 'required|min:3',
-            'event' => 'required|min:3',
-            'penyelenggara' => 'required|min:3',
-            'tempat' => 'required|min:3',
+        $validated = $request->validate([
+            'nim' => 'required|string|max:20',
+            'nama' => 'required|string|max:255',
+            'prodi' => 'required|string|in:PSIK,Fisioterapi,Admistrasi Kesehatan',
+            'event' => 'required|string|max:255',
+            'penyelenggara' => 'required|string|max:255',
+            'tempat' => 'required|string|max:255',
             'tglMulai' => 'required|date',
-            'tglAkhir' => 'required|date',
-            'namaPenghargaan' => 'required|min:3',
-            'peringkat' => 'required|min:3',
-            'level' => 'required|min:3',
-            'file' => 'file|max:5000|mimes:pdf', // max 5MB
-        ], [
-            'nim.required' => 'NIM wajib diisi.',
-            'nim.min' => 'NIM harus terdiri dari minimal 3 karakter.',
-
-            'nama.required' => 'Nama wajib diisi.',
-            'nama.min' => 'Nama harus terdiri dari minimal 3 karakter.',
-
-            'prodi.required' => 'Prodi wajib diisi.',
-            'prodi.min' => 'Prodi harus terdiri dari minimal 3 karakter.',
-            
-            'event.required' => 'Event wajib diisi.',
-            'event.min' => 'Event harus terdiri dari minimal 3 karakter.',
-
-            'penyelenggara.required' => 'Penyelenggara wajib diisi.',
-            'penyelenggara.min' => 'Penyelenggara harus terdiri dari minimal 3 karakter.',
-
-            'tempat.required' => 'Tempat wajib diisi.',
-            'tempat.min' => 'Tempat harus terdiri dari minimal 3 karakter.',
-
-            'tglMulai.required' => 'Tanggal mulai wajib diisi.',
-            'tglMulai.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
-
-            'tglAkhir.required' => 'Tanggal akhir wajib diisi.',
-            'tglAkhir.date' => 'Tanggal akhir harus berupa tanggal yang valid.',
-
-            'namaPenghargaan.required' => 'Nama penghargaan wajib diisi.',
-            'namaPenghargaan.min' => 'Nama penghargaan harus terdiri dari minimal 3 karakter.',
-
-            'peringkat.required' => 'Peringkat wajib diisi.',
-            'peringkat.min' => 'Peringkat harus terdiri dari minimal 3 karakter.',
-
-            'level.required' => 'Level wajib diisi.',
-            'level.min' => 'Level harus terdiri dari minimal 3 karakter.',
-
-            'file.file' => 'File yang diunggah harus berupa berkas.',
-            'file.max' => 'Ukuran file maksimal adalah 5MB.',
-            'file.mimes' => 'File harus dalam format PDF.',
+            'tglAkhir' => 'required|date|after_or_equal:tglMulai',
+            'kategoriPenghargaan' => 'required|string|max:255',
+            'peringkat' => 'required|string|in:Juara 1,Juara 2,Juara 3,Juara Harapan',
+            'level' => 'required|string|in:Regional,Provinsi,Nasional,Internasional',
+            'attachment' => 'nullable|file|mimes:pdf,doc,docx|max:10240', // Max 10MB
         ]);
 
-        // Mengelola file baru
-        if ($request->hasFile('file')) {
+        // Handle attachment
+        if ($request->hasFile('attachment')) {
             // Hapus file lama jika ada
-            if ($achievement->file && Storage::disk('public')->exists(str_replace('storage/', '', $achievement->file))) {
-                Storage::disk('public')->delete(str_replace('storage/', '', $achievement->file));
+            if ($achievement->attachment) {
+                Storage::disk('public')->delete($achievement->attachment);
             }
 
-            // Simpan file baru ke folder "achievements"
-            $path = $request->file('file')->store('public/achievements');
-            $validatedData['file'] = str_replace('public/', 'storage/', $path); // Simpan path agar dapat diakses
+            $file = $request->file('attachment');
+            $fileName = $request->nim . '_' . $file->getClientOriginalName();
+            $validated['attachment'] = $file->storeAs('achievements', $fileName, 'public');
         }
 
-        // Update data di database
-        $achievement->update($validatedData);
+        $achievement->update($validated);
 
-        // Flash pesan berhasil
+        // Pesan sukses dan redirect
         session()->flash('status', 'UPDATED');
-        session()->flash('pesan', 'Data dan file berhasil diperbarui.');
-
-        // Redirect ke halaman index
-        return redirect()->route('achievement.index');
+        session()->flash('pesan', 'Data Prestasi berhasil diperbarui');
+        return redirect()->route('achievements.index');
+    
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Achievement $achievement)
+    public function destroy(achievement $achievement)
     {
-        // Cek jika file ada dan file tersebut ada di storage
-        if ($achievement->file && Storage::disk('public')->exists(str_replace('storage/', '', $achievement->file))) {
-            Storage::disk('public')->delete(str_replace('storage/', '', $achievement->file));
+        // Hapus file attachment jika ada
+        if ($achievement->attachment) {
+            Storage::disk('public')->delete($achievement->attachment);
         }
 
         $achievement->delete();
-        session()->flash('status', 'TERHAPUS');
-        session()->flash('pesan', 'Data dan File Achievement Berhasil Dihapus');
-        return redirect()->route('achievement.index');
+
+        // Pesan sukses dan redirect
+        session()->flash('status', 'DELETED');
+        session()->flash('pesan', 'Data Prestasi berhasil dihapus');
+        return redirect()->route('achievements.index');
+    
     }
-
-    public function download($achievement)
-    {
-        $path = 'public/achievements/' . $achievement;  // Mengakses file di dalam storage/app/public/achievements
-
-        // Cek apakah file ada
-        if (Storage::exists($path)) {
-            return Storage::download($path);  // Men-download file
-        } else {
-            return abort(404, 'File tidak ditemukan.');  // Menampilkan 404 jika file tidak ada
-        }
-    }
-
-
 }

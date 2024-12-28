@@ -14,8 +14,8 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        
-                                        <form action="{{ route('achievement.store') }}" method="post"
+
+                                        <form action="{{ route('achievements.store') }}" method="post"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group @error('nim') has-danger @enderror row">
@@ -53,10 +53,13 @@
                                                     class="col-sm-2 col-form-label col-form-label-sm">Program Studi</label>
                                                 <div class="col-sm-4">
                                                     <select name="prodi" class="form-control">
-                                                        <option selected>:. Pilih Prodi .:</option>
-                                                        <option value="PSIK & Ners">PSIK & Ners</option>
-                                                        <option value="Fisioterapi">Fisioterapi</option>
-                                                        <option value="Administrasi Kesehatan">Administrasi Kesehatan</option>
+                                                        <option value="" selected>:. Pilih Prodi .:</option>
+                                                        @foreach (['PSIK', 'Fisioterapi', 'Admistrasi Kesehatan'] as $prodi)
+                                                            <option value="{{ $prodi }}"
+                                                                {{ old('prodi') == $prodi ? 'selected' : '' }}>
+                                                                {{ $prodi }}</option>
+                                                        @endforeach
+
                                                     </select>
                                                     @error('prodi')
                                                         <span class="col-form-label">
@@ -84,8 +87,7 @@
                                                 <label for="colFormLabelSm"
                                                     class="col-sm-2 col-form-label col-form-label-sm">Nama Event</label>
                                                 <div class="col-sm-10">
-                                                    <textarea class="form-control @error('event') form-control-danger @enderror" name="event" rows="3"
-                                                        required>{{ old('event') }}</textarea>
+                                                    <textarea class="form-control @error('event') form-control-danger @enderror" name="event" rows="3" required>{{ old('event') }}</textarea>
                                                     @error('event')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
@@ -112,19 +114,21 @@
                                                     {{-- TANGGAL MULAI --}}
                                                     <div class="form-row">
                                                         <div class="col">
-                                                            <input type="date" class="form-control" name="tglMulai" value="{{old('tglMulai')}}">
+                                                            <input type="date" class="form-control" name="tglMulai"
+                                                                value="{{ old('tglMulai') }}">
                                                         </div>
                                                     </div>
                                                     {{-- AKHIR TANGGAL MULAI --}}
                                                 </div>
                                                 <div class="col-sm-1 ">
-                                                    sampai 
+                                                    sampai
                                                 </div>
                                                 <div class="form-group col-sm-4">
                                                     {{-- TANGGAL MULAI --}}
                                                     <div class="form-row">
                                                         <div class="col">
-                                                            <input type="date" class="form-control" name="tglAkhir" value="{{old('tglAkhir')}}">
+                                                            <input type="date" class="form-control" name="tglAkhir"
+                                                                value="{{ old('tglAkhir') }}">
                                                         </div>
                                                     </div>
                                                     {{-- AKHIR TANGGAL MULAI --}}
@@ -132,15 +136,16 @@
 
 
                                             </div>
-                                            <div class="form-group @error('namaPenghargaan') has-danger @enderror row">
+                                            <div class="form-group @error('kategoriPenghargaan') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">Nama Penghargaan</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Kategori
+                                                    Penghargaan</label>
                                                 <div class="col-sm-10">
                                                     <input type="text"
-                                                        class="form-control form-control-sm @error('namaPenghargaan') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="namaPenghargaan"
-                                                        value="{{ old('namaPenghargaan') }}" required>
-                                                    @error('namaPenghargaan')
+                                                        class="form-control form-control-sm @error('kategoriPenghargaan') form-control-danger @enderror"
+                                                        id="colFormLabelSm" name="kategoriPenghargaan"
+                                                        value="{{ old('kategoriPenghargaan') }}" required>
+                                                    @error('kategoriPenghargaan')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -152,11 +157,12 @@
                                                     class="col-sm-2 col-form-label col-form-label-sm">Peringkat</label>
                                                 <div class="col-sm-4">
                                                     <select name="peringkat" class="form-control">
-                                                        <option selected>:. Pilih Peringkat .:</option>
-                                                        <option value="Juara 1">Juara 1</option>
-                                                        <option value="Juara 2">Juara 2</option>
-                                                        <option value="Juara 3">Juara 3</option>
-                                                        <option value="Juara Harapan">Juara Harapan</option>
+                                                        <option value="">Pilih Peringkat</option>
+                                                        @foreach (['Juara 1', 'Juara 2', 'Juara 3', 'Juara Harapan'] as $peringkat)
+                                                            <option value="{{ $peringkat }}"
+                                                                {{ old('peringkat', $achievement->peringkat ?? '') == $peringkat ? 'selected' : '' }}>
+                                                                {{ $peringkat }}</option>
+                                                        @endforeach
                                                     </select>
                                                     @error('peringkat')
                                                         <span class="col-form-label">
@@ -170,11 +176,12 @@
                                                     class="col-sm-2 col-form-label col-form-label-sm">Level</label>
                                                 <div class="col-sm-4">
                                                     <select name="level" class="form-control">
-                                                        <option selected>:. Pilih Level Prestasi .:</option>
-                                                        <option value="regional">Regional</option>
-                                                        <option value="provinsi">Provinsi</option>
-                                                        <option value="nasional">Nasional</option>
-                                                        <option value="internasional">Internasional</option>
+                                                        <option value="">Pilih Level</option>
+                                                        @foreach (['Regional', 'Provinsi', 'Nasional', 'Internasional'] as $level)
+                                                            <option value="{{ $level }}"
+                                                                {{ old('level', $achievement->level ?? '') == $level ? 'selected' : '' }}>
+                                                                {{ $level }}</option>
+                                                        @endforeach
                                                     </select>
                                                     @error('level')
                                                         <span class="col-form-label">
@@ -183,24 +190,28 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="form-group @error('file') has-danger @enderror row">
+                                            <div class="form-group @error('attachment') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">File</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Attachment</label>
                                                 <div class="col-sm-10">
                                                     <input type="file"
-                                                        class="form-control form-control-sm @error('file') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="file">
-                                                        <span class="font-italic">File ini WAJIB format pdf, jika ada sertifikat dan beberapa dokumentasi kegiatan bisa dijadikan satu file pdf baru di upload</span>
-                                                    @error('file')
+                                                        class="form-control form-control-sm @error('attachment') form-control-danger @enderror"
+                                                        id="colFormLabelSm" name="attachment">
+                                                    {{-- <span class="font-italic">attachment ini WAJIB format pdf, jika ada
+                                                        sertifikat dan beberapa dokumentasi kegiatan bisa dijadikan satu
+                                                        attachment pdf baru di upload</span> --}}
+                                                    @error('attachment')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-sm btn-mat waves-effect waves-light btn-info">simpan</button>
-                                            <a href="{{ route('achievement.index') }}"
-                                                class="btn btn-sm btn-mat waves-effect waves-light btn-secondary" >Batal & Kembali</a>
+                                            <button type="submit"
+                                                class="btn btn-sm btn-mat waves-effect waves-light btn-info">simpan</button>
+                                            <a href="{{ route('achievements.index') }}"
+                                                class="btn btn-sm btn-mat waves-effect waves-light btn-secondary">Batal &
+                                                Kembali</a>
                                         </form>
                                     </div>
                                 </div>

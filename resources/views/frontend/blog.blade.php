@@ -33,7 +33,7 @@
                         <p class="post-category">{{$item->category->name}}</p>
 
                         <h2 class="title">
-                            <a href="{{route('post.show', $item->slug)}}" target="_blank">{{$item->title}}</a>
+                            <a href="{{route('posts.detail', $item->slug)}}" target="_blank">{{$item->title}}</a>
                         </h2>
 
                         <div class="d-flex align-items-center">

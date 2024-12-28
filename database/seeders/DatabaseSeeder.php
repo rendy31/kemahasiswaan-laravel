@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             AchievementsTableSeeder::class,
-            PostSeeder::class,
+            // PostSeeder::class,
+            OrganizationSeeder::class,
         ]);
     }
 }

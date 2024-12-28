@@ -23,7 +23,7 @@
                                                 {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                             </div>
                                             <div class="col d-flex justify-content-end">
-                                                <a href="{{route('achievement.create')}}" class="btn btn-sm btn-mat waves-effect waves-light btn-primary ">Tambah Data</a>
+                                                <a href="{{route('achievements.create')}}" class="btn btn-sm btn-mat waves-effect waves-light btn-primary ">Tambah Data</a>
                                             </div>
                                         </div>
                                         
@@ -57,23 +57,26 @@
                                                             <td>{{ $item->nama }}</td>
                                                             <td>{{ $item->prodi }}</td>
                                                             <td>{{ $item->event }}</td>
-                                                            <td>{{ $item->namaPenghargaan }}</td>
+                                                            <td>{{ $item->kategoriPenghargaan }}</td>
                                                             <td>{{ $item->peringkat }}</td>
                                                             <td>{{ $item->level }}</td>
                                                             <td>{{ $item->penyelenggara }}</td>
                                                             <td>{{ $item->tempat }}</td>
                                                             <td>{{ $item->tglMulai }} s.d {{ $item->tglAkhir }}</td>
                                                             <td>
-                                                                @if ($item->file)
-                                                                <a href="{{ route('achievement.download', ['achievement' => $item->file]) }}" class="btn btn-sm btn-mat waves-effect waves-light btn-outline-info">Download</a>
+                                                                @if ($item->attachment)
+                                                                    <a href="{{ asset('storage/' . $item->attachment) }}"
+                                                                        target="_blank" class="btn btn-sm btn-mat waves-effect waves-light btn-outline-info">Lampiran</a>
+                                                                @else
+                                                                    Tidak ada lampiran
                                                                 @endif
                                                             </td>
                                                             <td class="d-flex">
-                                                                <a href="{{ route('achievement.edit', $item->id) }}"
+                                                                <a href="{{ route('achievements.edit', $item->id) }}"
                                                                     class="text-dark btn btn-sm btn-mat waves-effect waves-light btn-warning mx-1">Edit</a>
 
                                                                 <form method="post"
-                                                                    action="{{ route('achievement.destroy', $item->id) }}"
+                                                                    action="{{ route('achievements.destroy', $item->id) }}"
                                                                     onsubmit="return confirm('Apakah anda yakin menghapus data ini ?');">
                                                                     @csrf
                                                                     @method('DELETE')
