@@ -16,58 +16,52 @@
                                     </div>
                                 @endif
                                 <div class="card">
+
                                     <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h5>List Users</h5>
-                                        <a href="{{ route('users.create') }}" 
-                                           class="btn btn-sm btn-mat waves-effect waves-light btn-primary">
-                                            Tambah Data
-                                        </a>
+                                        <h5>Roles</h5>
+                                        <a href="{{ route('roles.create') }}"
+                                            class="btn btn-sm btn-mat waves-effect waves-light btn-primary">Tambah
+                                            Role</a>
                                     </div>
-                                    
+
                                     <div class="card-block">
                                         <div class="table-responsive">
                                             <table class="table table-sm table-hover display table-borderless"
-                                                   id="userTable" style="width:100%">
+                                                id="myTable" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th class="w-5">No</th>
-                                                        <th>Nama</th>
-                                                        <th>Email</th>
-                                                        <th>Roles</th>
-                                                        <th>Permissions</th>
-                                                        <th>Aksi</th>
+                                                        <th class="col-md-1">No</th>
+                                                        <th class="col-md-2">Roles Name</th>
+                                                        <th class="col-md-8">Permissions</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($users as $user)
+                                                    @foreach ($roles as $item)
                                                         <tr>
                                                             <th class="align-middle">{{ $loop->iteration }}</th>
-                                                            <td>{{ $user->name }}</td>
-                                                            <td>{{ $user->email }}</td>
+                                                            <td>{{ $item->name }}</td>
                                                             <td>
-                                                                @foreach ($user->roles as $role)
-                                                                    <span class="label label-md label-inverse-primary">{{ $role->name }}</span>
-                                                                @endforeach
-                                                            </td>
-                                                            <td>
-                                                                @foreach ($user->permissions as $permission)
-                                                                    <span class="label label-md label-inverse-info">{{ $permission->name }}</span>
+                                                                @foreach ($item->permissions as $permission)
+                                                                    {{-- <ul class="list-group list-group-flush">
+                                                                        <li class="list-group-item">{{ $permission->name }}</li>
+                                                                    </ul> --}}
+                                                                    <span
+                                                                        class="label label-md label-inverse-primary">{{ $permission->name }}</span>
                                                                 @endforeach
                                                             </td>
                                                             <td class="d-flex justify-content-center align-items-center">
-                                                                <a href="{{ route('users.edit', $user->id) }}"
-                                                                   class="btn btn-sm btn-mat waves-effect waves-light btn-warning mx-1">
-                                                                    Edit
+                                                                <a href="{{ route('roles.permissions.edit', $item->id) }}"
+                                                                    class="btn btn-sm btn-mat waves-effect waves-light btn-info mx-1">
+                                                                    Kelola Permissions
                                                                 </a>
-                                                                <form method="POST"
-                                                                      action="{{ route('users.destroy', $user->id) }}"
-                                                                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
+                                                                <form method="post"
+                                                                    action="{{ route('roles.destroy', $item->id) }}"
+                                                                    onsubmit="return confirm('Apakah anda yakin menghapus Role ini ?');">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="submit"
-                                                                        class="btn btn-sm btn-mat waves-effect waves-light btn-danger mx-1">
-                                                                        Hapus
-                                                                    </button>
+                                                                        class="btn btn-sm btn-mat waves-effect waves-light btn-danger mx-1">Hapus</button>
                                                                 </form>
                                                             </td>
                                                         </tr>

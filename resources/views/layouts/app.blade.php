@@ -115,8 +115,9 @@
                             </div>
                         </div>
                         <a href="index.html">
-                            <img class="img-fluid" src="{{ url('assets/images/logobackend.png') }}" alt="Theme-Logo" />
+                            <img class="img-fluid" style="max-width: 190px;" src="{{ url('assets/images/logobackend.png') }}" alt="Theme-Logo" />
                         </a>
+                        
                         <a class="mobile-options waves-effect waves-light">
                             <i class="ti-more"></i>
                         </a>
@@ -290,7 +291,7 @@
 
 
 
-
+                                
                                 <li class="{{ request()->routeIs('monevs.*') ? 'active' : '' }}">
                                     <a href="{{ route('monevs.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-agenda"></i><b>FC</b></span>
@@ -298,6 +299,7 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
+                                @role('BKA')
                                 <li class="{{ request()->routeIs('downloads.*') ? 'active' : '' }}">
                                     <a href="{{ route('downloads.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-download"></i><b>FC</b></span>
@@ -314,6 +316,7 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
+                                
                                 <li class="{{ request()->routeIs('scholarships.*') ? 'active' : '' }}">
                                     <a href="{{ route('scholarships.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-medall"></i><b>FC</b></span>
@@ -322,27 +325,27 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-
+                                @endrole
                             </ul>
 
                             <div class="pcoded-navigation-label" data-i18n="nav.category.other">Setting</div>
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu ">
+                                <li class="pcoded-hasmenu {{ request()->routeIs(['roles.*', 'permissions.*','users.*']) ? 'active pcoded-trigger' : '' }}">
                                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Sistem</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
-                                        <li class="">
-                                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                        <li class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
+                                            <a href="{{route('users.index')}}" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext"
                                                     data-i18n="nav.menu-levels.menu-level-21">Users</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
-                                        <li class="pcoded-hasmenu ">
+                                        <li class="pcoded-hasmenu {{ request()->routeIs(['roles.*', 'permissions.*']) ? 'active pcoded-trigger' : '' }}">
                                             <a href="javascript:void(0)" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
                                                 <span class="pcoded-mtext"
@@ -350,8 +353,8 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                             <ul class="pcoded-submenu">
-                                                <li class="">
-                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                <li class="{{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                                                    <a href="{{route('roles.index')}}" class="waves-effect waves-dark">
                                                         <span class="pcoded-micon"><i
                                                                 class="ti-angle-right"></i></span>
                                                         <span class="pcoded-mtext"
@@ -359,8 +362,8 @@
                                                         <span class="pcoded-mcaret"></span>
                                                     </a>
                                                 </li>
-                                                <li class="">
-                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                <li class="{{ request()->routeIs('permissions.*') ? 'active' : '' }}">
+                                                    <a href="{{route('permissions.index')}}" class="waves-effect waves-dark">
                                                         <span class="pcoded-micon"><i
                                                                 class="ti-angle-right"></i></span>
                                                         <span class="pcoded-mtext"

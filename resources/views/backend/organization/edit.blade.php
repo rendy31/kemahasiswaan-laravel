@@ -13,9 +13,8 @@
                                         {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
                                     </div>
                                     <div class="card-block">
-                                        <form
-                                            action="{{ route('organizations.update', ['organization' => $organization->id]) }}"
-                                            method="post" enctype="multipart/form-data">
+                                        <form action="{{ route('organizations.update', $organization->id) }}" method="post"
+                                            enctype="multipart/form-data">
                                             @method('PUT')
                                             @csrf
                                             <div class="form-group @error('structure') has-danger @enderror row">
@@ -30,7 +29,8 @@
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
-                                                    <img src="{{ Storage::url($organization->structure) }}" class="img-fluid img-thumbnail w-25 mt-1" >
+                                                    <img src="{{ Storage::url($organization->structure) }}"
+                                                        class="img-fluid img-thumbnail w-25 mt-1">
                                                 </div>
                                             </div>
 
@@ -38,20 +38,22 @@
                                                 <label for="colFormLabelSm"
                                                     class="col-sm-2 col-form-label col-form-label-sm">Deskripsi</label>
                                                 <div class="col-sm-10">
-                                                    <textarea id="summernote" class="form-control @error('description') form-control-danger @enderror" name="description">{{ old('description') ?? $organization->description }}</textarea>
+                                                    <textarea id="summernote" class="form-control @error('description') form-control-danger @enderror" name="description">{{ old('description', $organization->description) }}</textarea>
+
                                                     @error('description')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
-                                                    
+
                                                 </div>
                                             </div>
 
-                                            <button type="submit" class="btn btn-sm btn-grd-info">update</button>
+                                            <button type="submit"
+                                                class="btn btn-sm btn-mat waves-effect waves-light btn-primary text-dark">update</button>
                                             <a href="{{ route('organizations.index') }}"
-                                                class="btn btn-sm btn-grd-secondary" type="reset"
-                                                class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
+                                                class="btn btn-sm btn-mat waves-effect waves-light btn-default text-dark"
+                                                type="reset">Batal & Kembali</a>
                                         </form>
                                     </div>
                                 </div>

@@ -63,7 +63,7 @@
                       <h4 class="sitename">KEMAHASISWAAN</h4>
                     </li>
                     <li class="list-group-item bg-transparent p-0" style="border: none;">
-                      <h6 class="sitename">STIKES Suaka Insan</h6>
+                      <h5 class="sitename">STIKES Suaka Insan</h5>
                     </li>
                   </ul>
                 </div>
@@ -80,10 +80,10 @@
                             <li class="dropdown"><a href="#"><span>Organisasi</span> <i
                                         class="bi bi-chevron-down toggle-dropdown"></i></a>
                                 <ul>
-                                    <li><a href="#">Badan Eksekutif Mahasiswa (BEM)</a></li>
-                                    <li><a href="#">HIMA Keperawatan</a></li>
-                                    <li><a href="#">HIMA Fisioterapi</a></li>
-                                    <li><a href="#">HIMA AdminKes</a></li>
+                                    <li><a href="{{route('bem')}}">Badan Eksekutif Mahasiswa (BEM)</a></li>
+                                    <li><a href="{{route('himapsik')}}">HIMA Keperawatan</a></li>
+                                    <li><a href="{{route('himafisioterapi')}}">HIMA Fisioterapi</a></li>
+                                    <li><a href="{{route('himaadminkes')}}">HIMA AdminKes</a></li>
                                 </ul>
                             </li>
                             <li><a href="{{route('kegiatanMhs')}}">Keg. Mahasiswa</a></li>

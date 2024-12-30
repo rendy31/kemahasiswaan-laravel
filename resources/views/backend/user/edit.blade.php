@@ -1,31 +1,6 @@
 @extends('layouts.app')
 @section('content')
     <div class="pcoded-content">
-        <!-- Page-header start -->
-        {{-- <div class="page-header">
-        <div class="page-block">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <div class="page-header-title">
-                        <h5 class="m-b-10">Sample Page</h5>
-                        <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <ul class="breadcrumb-title">
-                        <li class="breadcrumb-item">
-                            <a href="index.html"> <i class="fa fa-home"></i> </a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#!">Pages</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#!">Sample Page</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-        <!-- Page-header end -->
         <div class="pcoded-inner-content">
             <div class="main-body">
                 <div class="page-wrapper">
@@ -34,29 +9,66 @@
                             <div class="col-sm-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5>Update Kategori</h5>
-                                        {{-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
+                                        <h5>Edit User</h5>
                                     </div>
                                     <div class="card-block">
-                                        <form action="{{ route('category.update',['category'=>$category->id]) }}" method="post">
-                                            @method('PUT')
+                                        <form action="{{ route('users.update', $user->id) }}" method="post">
                                             @csrf
-                                            <div class="form-group @error('name') has-danger @enderror row">
-                                                <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">Nama Kategori</label>
+                                            @method('PUT')
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label col-form-label-sm">Nama</label>
                                                 <div class="col-sm-10">
                                                     <input type="text"
                                                         class="form-control form-control-sm @error('name') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="name" value="{{ old('name') ?? $category->name }}" required>
-                                                        @error('name')
-                                                            <span class="col-form-label">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
+                                                        name="name" value="{{ old('name', $user->name) }}" required>
+                                                    @error('name')
+                                                        <span class="col-form-label"><strong>{{ $message }}</strong></span>
+                                                    @enderror
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-sm btn-grd-info">Update</button>
-                                            <a href="{{route('category.index')}}" class="btn btn-sm btn-grd-secondary" class="btn btn-sm btn-grd-secondary">Batal & Kembali</a>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label col-form-label-sm">Email</label>
+                                                <div class="col-sm-10">
+                                                    <input type="email"
+                                                        class="form-control form-control-sm @error('email') form-control-danger @enderror"
+                                                        name="email" value="{{ old('email', $user->email) }}" required>
+                                                    @error('email')
+                                                        <span class="col-form-label"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label col-form-label-sm">Role</label>
+                                                <div class="col-sm-10">
+                                                    <select name="role" class="form-control form-control-sm" required>
+                                                        <option value="" disabled>.: Pilih Role :.</option>
+                                                        @foreach ($roles as $role)
+                                                            <option value="{{ $role->name }}" {{ $user->roles->contains($role) ? 'selected' : '' }}>
+                                                                {{ $role->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('role')
+                                                        <span class="col-form-label"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label col-form-label-sm">Permissions</label>
+                                                <div class="col-sm-10">
+                                                    @foreach ($permissions as $permission)
+                                                        <div class="form-check">
+                                                            <input type="checkbox" name="permissions[]" value="{{ $permission->id }}"
+                                                                class="form-check-input" id="permission_{{ $permission->id }}"
+                                                                {{ $user->permissions->contains($permission) ? 'checked' : '' }}>
+                                                            <label for="permission_{{ $permission->id }}"
+                                                                class="form-check-label">{{ $permission->name }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-sm btn-mat waves-effect waves-light btn-primary">Simpan</button>
+                                            <a href="{{ route('users.index') }}" class="btn btn-sm btn-mat waves-effect waves-light btn-secondary">Batal & Kembali</a>
                                         </form>
                                     </div>
                                 </div>

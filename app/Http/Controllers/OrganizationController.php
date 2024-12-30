@@ -86,10 +86,13 @@ class OrganizationController extends Controller
             $updateData['structure'] = str_replace('public/', '', $path); // Simpan hanya path relatif
         }
 
-        // Periksa apakah description ada dalam request
-        if ($request->filled('description')) {
+        // Periksa apakah description ada dalam request (gunakan has() untuk menangani string kosong)
+        if ($request->has('description')) {
             $updateData['description'] = $request->input('description');
         }
+
+        // Debug jika diperlukan
+        // dd($updateData);
 
         // Update data di database
         $organization->update($updateData);

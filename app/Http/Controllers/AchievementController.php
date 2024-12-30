@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\achievement;
 use Illuminate\Http\Request;
+use App\Exports\AchievementsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class AchievementController extends Controller
@@ -138,5 +140,17 @@ class AchievementController extends Controller
         session()->flash('pesan', 'Data Prestasi berhasil dihapus');
         return redirect()->route('achievements.index');
     
+    }
+
+    public function export(Request $request)
+    {
+        // Ambil filter 'prodi' dari input
+        $prodi = $request->input('prodi');
+
+        // Nama file export
+        $fileName = 'achievements_' . $prodi . '.xlsx';
+
+        // Return file Excel dengan filter prodi
+        return Excel::download(new AchievementsExport($prodi), $fileName);
     }
 }

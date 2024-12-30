@@ -7,6 +7,7 @@ use App\Models\front;
 use App\Models\Download;
 use App\Models\Achievement;
 use App\Models\Monev;
+use App\Models\Organization;
 use App\Models\Scholarship;
 use App\Models\studentActivity;
 use Illuminate\Http\Request;
@@ -146,10 +147,10 @@ class FrontController extends Controller
         $mahasiswa = Achievement::where('prodi', $prodi)
             ->where('peringkat', $peringkat)
             ->where('level', $level)
-            ->get(['nim','nama','event','penyelenggara','tglMulai','attachment']); // Ambil beberapa kolom
+            ->get(['nim', 'nama', 'event', 'penyelenggara', 'tglMulai', 'attachment']); // Ambil beberapa kolom
 
         // Mengirimkan data ke view
-        return view('frontend.daftar_mahasiswa', compact('mahasiswa', 'prodi', 'peringkat','level'));
+        return view('frontend.daftar_mahasiswa', compact('mahasiswa', 'prodi', 'peringkat', 'level'));
     }
 
 
@@ -194,11 +195,29 @@ class FrontController extends Controller
         return view('frontend.asrama', compact('posts'));
     }
 
-    // public function kegiatanMahasiswaDetail()
-    // {
-    //     $postsKegiatanMhsDetail = Post::where('category_id','1')->latest()->take(5)->get();
-    //     return view('frontend.kegiatanMhs', compact('$postsKegiatanMhsDetail'));
-    // }
+    public function bem()
+    {
+        $bem = Organization::find(1); // Mengambil data berdasarkan primary key
+        return view('frontend.bem', compact('bem'));
+    }
+
+    public function himapsik()
+    {
+        $himapsik = Organization::find(2); // Mengambil data berdasarkan primary key
+        return view('frontend.himapsik', compact('himapsik'));
+    }
+
+    public function himafisioterapi()
+    {
+        $himafisioterapi = Organization::find(3); // Mengambil data berdasarkan primary key
+        return view('frontend.himafisioterapi', compact('himafisioterapi'));
+    }
+
+    public function himaadminkes()
+    {
+        $himaadminkes = Organization::find(4); // Mengambil data berdasarkan primary key
+        return view('frontend.himaadminkes', compact('himaadminkes'));
+    }
 
     public function beasiswa()
     {
