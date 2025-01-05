@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-        <img src="{{url('assets/frontend/img/hero-bg.jpg')}}" alt="" data-aos="fade-in">
+        <img src="{{url('assets/frontend/img/perpus4.jpg')}}" alt="" data-aos="fade-in">
 
         <div class="container text-center" data-aos="fade-up" data-aos-delay="100">
             <div class="row justify-content-center">

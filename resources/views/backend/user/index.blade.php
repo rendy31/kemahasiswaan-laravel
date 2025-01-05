@@ -35,7 +35,7 @@
                                                         <th>Email</th>
                                                         <th>Roles</th>
                                                         <th>Permissions</th>
-                                                        <th>Aksi</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -51,7 +51,7 @@
                                                             </td>
                                                             <td>
                                                                 @foreach ($user->permissions as $permission)
-                                                                    <span class="label label-md label-inverse-info">{{ $permission->name }}</span>
+                                                                    <span class="label label-primary">{{ $permission->name }}</span>
                                                                 @endforeach
                                                             </td>
                                                             <td class="d-flex justify-content-center align-items-center">

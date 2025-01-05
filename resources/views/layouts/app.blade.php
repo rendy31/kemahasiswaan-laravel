@@ -138,7 +138,7 @@
                             </li>
                         </ul>
                         <ul class="nav-right">
-                            <li class="header-notification">
+                            {{-- <li class="header-notification">
                                 <a href="#!" class="waves-effect waves-light">
                                     <i class="ti-bell"></i>
                                     <span class="badge bg-c-red"></span>
@@ -163,16 +163,16 @@
                                     </li>
 
                                 </ul>
-                            </li>
+                            </li> --}}
                             <li class="user-profile header-notification">
                                 <a href="#!" class="waves-effect waves-light">
-                                    <img src="{{ url('assets/images/avatar-4.jpg') }}" class="img-radius"
+                                    <img src="{{ url('assets/images/faq_man.png') }}" class="img-radius"
                                         alt="User-Profile-Image">
                                     <span>{{ Auth::user()->name }}</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
                                 <ul class="show-notification profile-notification">
-                                    <li class="waves-effect waves-light">
+                                    {{-- <li class="waves-effect waves-light">
                                         <a href="#!">
                                             <i class="ti-settings"></i> Settings
                                         </a>
@@ -191,7 +191,7 @@
                                         <a href="auth-lock-screen.html">
                                             <i class="ti-lock"></i> Lock Screen
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="waves-effect waves-light">
                                         {{-- <a href="auth-normal-sign-in.html">
                                             <i class="ti-layout-sidebar-left"></i> Logout
@@ -221,15 +221,15 @@
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="">
                                 <div class="main-menu-header">
-                                    <img class="img-80 img-radius" src="{{ url('assets/images/avatar-4.jpg') }}"
+                                    <img class="img-80 img-radius" src="{{ url('assets/images/faq_man.png') }}"
                                         alt="User-Profile-Image">
                                     <div class="user-details">
-                                        <span id="more-details">{{ Auth::user()->name }}<i
-                                                class="fa fa-caret-down"></i></span>
+                                        <span id="more-details">{{ Auth::user()->name }}
+                                            {{-- <i class="fa fa-caret-down"></i></span> --}}
                                     </div>
                                 </div>
 
-                                <div class="main-menu-content">
+                                {{-- <div class="main-menu-content">
                                     <ul>
                                         <li class="more-details">
                                             <a href="user-profile.html"><i class="ti-user"></i>View Profile</a>
@@ -238,10 +238,10 @@
                                                     class="ti-layout-sidebar-left"></i>Logout</a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
                             </div>
 
-                            <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Layout</div>
+                            <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Menu</div>
                             <ul class="pcoded-item pcoded-left-item">
 
                                 <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
@@ -299,7 +299,7 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                @role('BKA')
+                                @if(auth()->user()->hasAnyRole('BKA') or auth()->user()->can('Download'))
                                 <li class="{{ request()->routeIs('downloads.*') ? 'active' : '' }}">
                                     <a href="{{ route('downloads.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-download"></i><b>FC</b></span>
@@ -308,6 +308,8 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
+                                @endif
+                                @role('BKA')
                                 <li class="{{ request()->routeIs('achievements.*') ? 'active' : '' }}">
                                     <a href="{{ route('achievements.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-cup"></i><b>FC</b></span>
@@ -328,6 +330,7 @@
                                 @endrole
                             </ul>
 
+                            @role('admin')
                             <div class="pcoded-navigation-label" data-i18n="nav.category.other">Setting</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu {{ request()->routeIs(['roles.*', 'permissions.*','users.*']) ? 'active pcoded-trigger' : '' }}">
@@ -385,6 +388,7 @@
                                     </ul>
                                 </li>
                             </ul>
+                            @endrole
                         </div>
                     </nav>
                     @yield('content')

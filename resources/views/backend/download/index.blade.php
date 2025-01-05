@@ -32,11 +32,14 @@
                                                         <th>Title</th>
                                                         <th>Description</th>
                                                         <th>Attachment</th>
+                                                        @role('BKA')
+                                                            
                                                         <th class="col d-flex justify-content-center"><a
-                                                                href="{{ route('downloads.create') }}"
-                                                                class="btn btn-sm btn-mat waves-effect waves-light btn-primary ">Upload
-                                                                File</a></th>
-                                                    </tr>
+                                                            href="{{ route('downloads.create') }}"
+                                                            class="btn btn-sm btn-mat waves-effect waves-light btn-primary ">Upload
+                                                            File</a></th>
+                                                        </tr>
+                                                        @endrole
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($downloads as $item)
@@ -53,6 +56,8 @@
                                                                 @endif
                                                                 
                                                             </td>
+                                                            @role('BKA')
+                                                                
                                                             <td class="d-flex">
                                                                 <a href="{{ route('downloads.edit', $item->id) }}"
                                                                     class="text-dark btn btn-sm btn-mat waves-effect waves-light btn-warning mx-1">Edit</a>
@@ -66,6 +71,7 @@
                                                                         class="btn btn-sm btn-mat waves-effect waves-light btn-danger">Hapus</button>
                                                                 </form>
                                                             </td>
+                                                            @endrole
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
