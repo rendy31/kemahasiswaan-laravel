@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\achievement;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exports\AchievementsExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,7 +35,6 @@ class AchievementController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $validated = $request->validate([
             'nim' => 'required|string|max:20',
             'nama' => 'required|string|max:255',
@@ -53,18 +53,19 @@ class AchievementController extends Controller
         // Simpan attachment
         if ($request->hasFile('attachment')) {
             $file = $request->file('attachment');
-            $fileName = $request->nim . '_' . $file->getClientOriginalName();
+            $fileName = $validated['nim'] . '-' . Str::slug($validated['nama']) . '-' . time() . '.' . $file->getClientOriginalExtension();
             $validated['attachment'] = $file->storeAs('achievements', $fileName, 'public');
         }
 
+        // Simpan data ke database
         Achievement::create($validated);
 
         // Pesan sukses dan redirect
         session()->flash('status', 'SAVED');
         session()->flash('pesan', 'Data Prestasi berhasil disimpan');
         return redirect()->route('achievements.index');
-    
     }
+
 
     /**
      * Display the specified resource.
@@ -85,8 +86,9 @@ class AchievementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, achievement $achievement)
+    public function update(Request $request, Achievement $achievement)
     {
+        // Validasi input
         $validated = $request->validate([
             'nim' => 'required|string|max:20',
             'nama' => 'required|string|max:255',
@@ -101,27 +103,37 @@ class AchievementController extends Controller
             'level' => 'required|string|in:Regional,Provinsi,Nasional,Internasional',
             'attachment' => 'nullable|file|mimes:pdf,doc,docx|max:10240', // Max 10MB
         ]);
-
+    
         // Handle attachment
         if ($request->hasFile('attachment')) {
             // Hapus file lama jika ada
-            if ($achievement->attachment) {
+            if ($achievement->attachment && Storage::disk('public')->exists($achievement->attachment)) {
                 Storage::disk('public')->delete($achievement->attachment);
             }
-
+    
+            // Simpan file baru dengan nama yang sesuai format
             $file = $request->file('attachment');
-            $fileName = $request->nim . '_' . $file->getClientOriginalName();
-            $validated['attachment'] = $file->storeAs('achievements', $fileName, 'public');
+            $fileName = $validated['nim'] . '-' . Str::slug($validated['nama']) . '-' . time() . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('achievements', $fileName, 'public');
+    
+            // Update path ke validated data
+            $validated['attachment'] = $filePath;
+        } else {
+            // Jika tidak ada file baru, jangan hapus attachment lama
+            unset($validated['attachment']);
         }
-
+    
+        // Update data di database
         $achievement->update($validated);
-
+    
         // Pesan sukses dan redirect
         session()->flash('status', 'UPDATED');
         session()->flash('pesan', 'Data Prestasi berhasil diperbarui');
         return redirect()->route('achievements.index');
-    
     }
+    
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -139,7 +151,6 @@ class AchievementController extends Controller
         session()->flash('status', 'DELETED');
         session()->flash('pesan', 'Data Prestasi berhasil dihapus');
         return redirect()->route('achievements.index');
-    
     }
 
     public function export(Request $request)

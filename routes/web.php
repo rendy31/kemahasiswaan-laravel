@@ -49,15 +49,15 @@ Route::middleware('auth')->group(function () {
     Route::get('achievement/export', [AchievementController::class, 'export'])->name('achievements.export');
     Route::resource('organizations', OrganizationController::class)->only('index', 'edit', 'update');
 
-    Route::resource('roles', RoleController::class)->except('show', 'edit', 'update')->middleware('role:admin');
-    Route::resource('permissions', PermissionController::class)->except('show', 'edit', 'update')->middleware('role:admin');
+    Route::resource('roles', RoleController::class)->except('show', 'edit', 'update');
+    Route::resource('permissions', PermissionController::class)->except('show', 'edit', 'update');
 
-    Route::get('roles/{role}/permissions', [RoleController::class, 'editPermissions'])->name('roles.permissions.edit')->middleware('role:admin');
-    Route::put('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('roles.permissions.update')->middleware('role:admin');
+    Route::get('roles/{role}/permissions', [RoleController::class, 'editPermissions'])->name('roles.permissions.edit');
+    Route::put('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('roles.permissions.update');
 
-    Route::resource('users', UserController::class)->middleware('role:admin');
-    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware('role:admin');
-    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update')->middleware('role:admin');
+    Route::resource('users', UserController::class);
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
 });
 
 Route::get('/', [FrontController::class, 'index'])->name('beranda');

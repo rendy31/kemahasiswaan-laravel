@@ -3,7 +3,7 @@
     <!-- Page Title -->
     <div class="page-title dark-background" style="background-image: url(assets/frontend/img/page-title-bg.webp);">
         <div class="container position-relative">
-            <h1>Kegiatan Mahasiswa</h1>
+            <h1>Pengembangan Karakter</h1>
             {{-- <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam
                 molestias.</p> --}}
             <nav class="breadcrumbs">

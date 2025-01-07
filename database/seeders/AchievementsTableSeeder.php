@@ -22,7 +22,7 @@ class AchievementsTableSeeder extends Seeder
         $levels = ['Regional', 'Provinsi', 'Nasional', 'Internasional'];
         $peringkat = ['Juara 1', 'Juara 2', 'Juara 3', 'Juara Harapan'];
 
-        for ($i = 0; $i < 500; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             DB::table('achievements')->insert([
                 'nim' => $faker->numerify('2021#####'), // Format NIM
                 'nama' => $faker->name, // Nama mahasiswa

@@ -143,7 +143,7 @@
                                     <i class="ti-bell"></i>
                                     <span class="badge bg-c-red"></span>
                                 </a>
-                                <ul class="show-notification">
+                                {{-- <ul class="show-notification">
                                     <li>
                                         <h6>Notifications</h6>
                                         <label class="label label-danger">New</label>
@@ -162,7 +162,7 @@
                                         </div>
                                     </li>
 
-                                </ul>
+                                </ul> --}}
                             </li>
                             <li class="user-profile header-notification">
                                 <a href="#!" class="waves-effect waves-light">
@@ -299,7 +299,7 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                @role('BKA')
+                                
                                 <li class="{{ request()->routeIs('downloads.*') ? 'active' : '' }}">
                                     <a href="{{ route('downloads.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-download"></i><b>FC</b></span>
@@ -325,9 +325,9 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                @endrole
+                                
                             </ul>
-
+                            {{-- @role('admin') --}}
                             <div class="pcoded-navigation-label" data-i18n="nav.category.other">Setting</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu {{ request()->routeIs(['roles.*', 'permissions.*','users.*']) ? 'active pcoded-trigger' : '' }}">
@@ -385,6 +385,7 @@
                                     </ul>
                                 </li>
                             </ul>
+                            {{-- @endrole --}}
                         </div>
                     </nav>
                     @yield('content')

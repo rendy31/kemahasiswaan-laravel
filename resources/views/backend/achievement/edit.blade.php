@@ -195,17 +195,17 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="form-group @error('file') has-danger @enderror row">
+                                            <div class="form-group @error('attachment') has-danger @enderror row">
                                                 <label for="colFormLabelSm"
-                                                    class="col-sm-2 col-form-label col-form-label-sm">File</label>
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Lampiran</label>
                                                 <div class="col-sm-10">
                                                     <input type="file"
-                                                        class="form-control form-control-sm @error('file') form-control-danger @enderror"
-                                                        id="colFormLabelSm" name="file">
+                                                        class="form-control form-control-sm @error('attachment') form-control-danger @enderror"
+                                                        id="colFormLabelSm" name="attachment">
                                                     {{-- <span class="font-italic">File ini WAJIB format pdf, jika ada
                                                         sertifikat dan beberapa dokumentasi kegiatan bisa dijadikan satu
                                                         file pdf baru di upload</span> --}}
-                                                    @error('file')
+                                                    @error('attachment')
                                                         <span class="col-form-label">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
