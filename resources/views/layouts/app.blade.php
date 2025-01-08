@@ -309,7 +309,7 @@
                                     </a>
                                 </li>
                                 @endif
-                                @role('BKA')
+                                
                                 <li class="{{ request()->routeIs('achievements.*') ? 'active' : '' }}">
                                     <a href="{{ route('achievements.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-cup"></i><b>FC</b></span>
@@ -327,10 +327,10 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                @endrole
+                                
                             </ul>
 
-                            @role('admin')
+                            
                             <div class="pcoded-navigation-label" data-i18n="nav.category.other">Setting</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu {{ request()->routeIs(['roles.*', 'permissions.*','users.*']) ? 'active pcoded-trigger' : '' }}">
@@ -388,7 +388,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                            @endrole
+                            
                         </div>
                     </nav>
                     @yield('content')
