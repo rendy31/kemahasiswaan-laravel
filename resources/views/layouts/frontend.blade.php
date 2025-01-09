@@ -73,7 +73,7 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/" class="{{request()->routeIs('beranda') ? 'active':''}}">Beranda</a></li>
-                    <li class="dropdown"><a href="#"><span>Kemahasiswaan</span>
+                    <li class="dropdown"><a href="#" class="{{request()->routeIs(['kegiatanMhs', 'pengembanganKarakter', 'asrama', 'bem','himaadminkes','himafisioterapi','himapsik']) ? 'active':''}}"><span>Kemahasiswaan</span>
                             <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             {{-- <li><a href="#">Dropdown 1</a></li> --}}
@@ -86,14 +86,14 @@
                                     <li><a href="{{route('himaadminkes')}}">HIMA AdminKes</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{route('kegiatanMhs')}}">Keg. Mahasiswa</a></li>
+                            <li><a href="{{route('kegiatanMhs')}}" >Keg. Mahasiswa</a></li>
                             <li><a href="{{route('pengembanganKarakter')}}">Pengembangan Karakter</a></li>
                             <li><a href="{{route('asrama')}}">Asrama</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{route('beasiswa')}}">Beasiswa</a></li>
+                    <li><a href="{{route('beasiswa')}}" class="{{request()->routeIs('beasiswa') ? 'active':''}}">Beasiswa</a></li>
                     <li><a href="{{route('prestasi')}}" class="{{request()->routeIs(['prestasi', 'prestasiProvinsi', 'prestasiNasional', 'prestasiInternasional']) ? 'active':''}}">Prestasi</a></li>
-                    <li class="dropdown"><a href="#" {{request()->routeIs('downloadfile') ? 'active':''}}"><span>Layanan</span>
+                    <li class="dropdown"><a href="#" class="{{request()->routeIs('unduh') ? 'active':''}}"><span>Layanan</span>
                             <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li><a href="https://bimsel.stikessuakainsan.ac.id" target="blank">Bimbingan Konseling</a></li>

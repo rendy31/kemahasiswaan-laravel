@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     public function index()
-    {
+    {   
+        
         $categories = Category::latest()->paginate(10); // Pagination
         return view('backend.blog.category.index', compact('categories'));
     }

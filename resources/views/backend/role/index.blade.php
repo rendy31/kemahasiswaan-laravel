@@ -55,6 +55,12 @@
                                                                     class="btn btn-sm btn-mat waves-effect waves-light btn-info mx-1">
                                                                     Kelola Permissions
                                                                 </a>
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-mat waves-effect waves-light btn-warning mx-1"
+                                                                    data-toggle="modal"
+                                                                    data-target="#editRoleModal{{ $item->id }}">
+                                                                    Edit
+                                                                </button>
                                                                 <form method="post"
                                                                     action="{{ route('roles.destroy', $item->id) }}"
                                                                     onsubmit="return confirm('Apakah anda yakin menghapus Role ini ?');">
@@ -68,6 +74,52 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+
+                                            {{-- MODAL EDIT ROLE NAME --}}
+                                            @foreach ($roles as $item)
+                                                <!-- Modal Edit Role Name -->
+                                                <div class="modal fade" id="editRoleModal{{ $item->id }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="editRoleModalLabel{{ $item->id }}"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <form action="{{ route('roles.update', $item->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"
+                                                                        id="editRoleModalLabel{{ $item->id }}">Edit
+                                                                        Role Name</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="form-group">
+                                                                        <label for="roleName{{ $item->id }}">Role
+                                                                            Name</label>
+                                                                        <input type="text" name="name"
+                                                                            id="roleName{{ $item->id }}"
+                                                                            class="form-control"
+                                                                            value="{{ $item->name }}" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-sm btn-mat waves-effect waves-light btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-sm btn-mat waves-effect waves-light btn-primary">Save
+                                                                        Changes</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+
+
+                                            {{-- END MODAL EDIT ROLE NAME --}}
                                         </div>
                                     </div>
                                 </div>

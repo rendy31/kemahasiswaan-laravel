@@ -40,6 +40,12 @@
                                                             <th class="align-middle">{{ $loop->iteration }}</th>
                                                             <td>{{ $item->name }}</td>
                                                             <td class="d-flex justify-content-center align-items-center ">
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-mat waves-effect waves-light btn-warning mx-1"
+                                                                    data-toggle="modal"
+                                                                    data-target="#editPermissionModal{{ $item->id }}">
+                                                                    Edit
+                                                                </button>
                                                                 <form method="post"
                                                                     action="{{ route('permissions.destroy', $item->id) }}"
                                                                     onsubmit="return confirm('Apakah anda yakin menghapus Permission ini ?');">
@@ -53,6 +59,52 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                            {{-- MODAL EDIT PERMISSION NAME --}}
+                                            @foreach ($permissions as $permission)
+                                                <!-- Modal Edit Permission -->
+                                                <div class="modal fade" id="editPermissionModal{{ $permission->id }}"
+                                                    tabindex="-1" role="dialog"
+                                                    aria-labelledby="editPermissionModalLabel{{ $permission->id }}"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <form action="{{ route('permissions.update', $permission->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"
+                                                                        id="editPermissionModalLabel{{ $permission->id }}">
+                                                                        Edit Permission Name</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                            for="permissionName{{ $permission->id }}">Permission
+                                                                            Name</label>
+                                                                        <input type="text" name="name"
+                                                                            id="permissionName{{ $permission->id }}"
+                                                                            class="form-control"
+                                                                            value="{{ $permission->name }}" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-sm btn-mat waves-effect waves-light btn-secondary mx-1"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-sm btn-mat waves-effect waves-light btn-primary mx-1">Save
+                                                                        Changes</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+
+                                            {{-- END MODAL EDIT PERMISSION NAME --}}
                                         </div>
                                     </div>
                                 </div>

@@ -43,14 +43,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class)->except('show');
     Route::resource('posts', PostController::class);
     Route::resource('scholarships', ScholarshipController::class);
-    Route::resource('downloads', DownloadController::class);
+    Route::resource('downloads', DownloadController::class)->middleware('role_or_permission:BKA|Download');
     Route::resource('monevs', MonevController::class);
     Route::resource('achievements', AchievementController::class);
     Route::get('achievement/export', [AchievementController::class, 'export'])->name('achievements.export');
     Route::resource('organizations', OrganizationController::class)->only('index', 'edit', 'update');
 
-    Route::resource('roles', RoleController::class)->except('show', 'edit', 'update');
-    Route::resource('permissions', PermissionController::class)->except('show', 'edit', 'update');
+    Route::resource('roles', RoleController::class)->except('show');
+    Route::resource('permissions', PermissionController::class)->except('show');
 
     Route::get('roles/{role}/permissions', [RoleController::class, 'editPermissions'])->name('roles.permissions.edit');
     Route::put('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('roles.permissions.update');

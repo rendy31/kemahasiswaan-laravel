@@ -42,7 +42,7 @@ class RoleController extends Controller
     {
         // Menghapus role
         $role->delete();
-        
+
         // Pesan sukses dan redirect
         session()->flash('status', 'DELETED');
         session()->flash('pesan', 'Role berhasil dihapus');
@@ -68,13 +68,26 @@ class RoleController extends Controller
             'permissions.*' => 'exists:permissions,name',
         ]);
 
-        
+
 
         // Sync permission yang dipilih dengan role
         $role->syncPermissions($request->permissions);
 
         session()->flash('status', 'SUCCESS');
         session()->flash('pesan', 'Permissions berhasil diperbarui');
+        return redirect()->route('roles.index');
+    }
+
+    public function update(Request $request, Role $role)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
+        ]);
+
+        $role->update(['name' => $request->name]);
+
+        session()->flash('status', 'UPDATED');
+        session()->flash('pesan', 'Nama Role berhasil diperbarui');
         return redirect()->route('roles.index');
     }
 }

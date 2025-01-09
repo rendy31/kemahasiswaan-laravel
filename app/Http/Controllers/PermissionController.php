@@ -41,4 +41,17 @@ class PermissionController extends Controller
         session()->flash('pesan', 'Permission berhasil dihapus');
         return redirect()->route('permissions.index');
     }
+
+    public function update(Request $request, Permission $permission)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:permissions,name,' . $permission->id,
+        ]);
+
+        $permission->update(['name' => $request->name]);
+
+        session()->flash('status', 'UPDATED');
+        session()->flash('pesan', 'Nama Permission berhasil Diperbarui');
+        return redirect()->route('permissions.index');
+    }
 }

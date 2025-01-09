@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
     <!-- Page Title -->
-    <div class="page-title dark-background" style="background-image: url(assets/frontend/img/page-title-bg.webp);">
+    <div class="page-title dark-background" style="background-image: url(assets/frontend/img/kantin4.jpg);">
         <div class="container position-relative">
             <h1>Prestasi</h1>
             {{-- <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam
