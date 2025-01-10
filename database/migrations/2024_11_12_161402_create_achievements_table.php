@@ -25,7 +25,11 @@ return new class extends Migration
             $table->string('peringkat');
             $table->string('level');
             $table->string('attachment')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable(); // Field user_id nullable
             $table->timestamps();
+
+            // Menambahkan foreign key constraint tanpa onDelete cascade
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
         });
     }
 

@@ -21,5 +21,6 @@ class achievement extends Model
         'peringkat',
         'level',
         'attachment',
+        'user_id',
     ];
 }

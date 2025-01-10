@@ -15,8 +15,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        
-        $posts = Post::with('category', 'user')->latest()->get();
+        $posts = Post::with('category', 'user')
+            ->when(auth()->user()->roles->pluck('id')->contains(3), function ($query) {
+                // Jika user memiliki role dengan id_role 3, filter berdasarkan user_id
+                $query->where('user_id', auth()->id());
+            })
+            ->latest()
+            ->get();
+
         return view('backend.blog.post.index', compact('posts'));
     }
 
@@ -72,7 +78,7 @@ class PostController extends Controller
      * Display the specified resource.
      */
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -151,10 +157,10 @@ class PostController extends Controller
 
         // Post category kegiatan mahasiswa
         $recentPosts = Post::where('category_id', $postDetail->category_id)
-                                        ->where('id', '!=', $postDetail->id) // Kecualikan artikel yang sedang ditampilkan
-                                        ->latest() // Urutkan berdasarkan created_at (terbaru)
-                                        ->take(5) // Ambil 5 artikel
-                                        ->get();
+            ->where('id', '!=', $postDetail->id) // Kecualikan artikel yang sedang ditampilkan
+            ->latest() // Urutkan berdasarkan created_at (terbaru)
+            ->take(5) // Ambil 5 artikel
+            ->get();
 
 
         // $recentPengembanganKarakter = Post::where('category_id', $postDetail->category_id)
@@ -176,9 +182,9 @@ class PostController extends Controller
         //                     ->get();
 
         // Kirim data post ke view
-        return view('frontend.artikel-detail', compact('postDetail','recentPosts'));
+        return view('frontend.artikel-detail', compact('postDetail', 'recentPosts'));
     }
-    
+
     public function recentPostKegMahasiswa()
     {
         // Post category kegiatan mahasiswa

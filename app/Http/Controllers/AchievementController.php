@@ -16,10 +16,20 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        //
-        $achievements = Achievement::latest()->get();
+        $user = auth()->user();
+
+        // Jika user memiliki role tertentu
+        if ($user->hasAnyRole(['mahasiswa', 'BEM-HIMA'])) {
+            // Tampilkan data berdasarkan user_id
+            $achievements = Achievement::where('user_id', $user->id)->latest()->get();
+        } else {
+            // Tampilkan semua data
+            $achievements = Achievement::latest()->get();
+        }
+
         return view('backend.achievement.index', compact('achievements'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -49,6 +59,8 @@ class AchievementController extends Controller
             'level' => 'required|string|in:Regional,Provinsi,Nasional,Internasional',
             'attachment' => 'required|file|mimes:pdf,doc,docx|max:10240', // Max 10MB
         ]);
+        // Tambahkan user_id berdasarkan user yang sedang login
+        $validated['user_id'] = auth()->id();
 
         // Simpan attachment
         if ($request->hasFile('attachment')) {
@@ -103,36 +115,36 @@ class AchievementController extends Controller
             'level' => 'required|string|in:Regional,Provinsi,Nasional,Internasional',
             'attachment' => 'nullable|file|mimes:pdf,doc,docx|max:10240', // Max 10MB
         ]);
-    
+        // Tambahkan user_id berdasarkan user yang sedang login
+        $validated['user_id'] = auth()->id();
+
         // Handle attachment
         if ($request->hasFile('attachment')) {
             // Hapus file lama jika ada
             if ($achievement->attachment && Storage::disk('public')->exists($achievement->attachment)) {
                 Storage::disk('public')->delete($achievement->attachment);
             }
-    
+
             // Simpan file baru dengan nama yang sesuai format
             $file = $request->file('attachment');
             $fileName = $validated['nim'] . '-' . Str::slug($validated['nama']) . '-' . time() . '.' . $file->getClientOriginalExtension();
             $filePath = $file->storeAs('achievements', $fileName, 'public');
-    
+
             // Update path ke validated data
             $validated['attachment'] = $filePath;
         } else {
             // Jika tidak ada file baru, jangan hapus attachment lama
             unset($validated['attachment']);
         }
-    
+
         // Update data di database
         $achievement->update($validated);
-    
+
         // Pesan sukses dan redirect
         session()->flash('status', 'UPDATED');
         session()->flash('pesan', 'Data Prestasi berhasil diperbarui');
         return redirect()->route('achievements.index');
     }
-    
-
 
 
     /**

@@ -161,14 +161,8 @@
                                             </div>
                                         </div>
                                     </li>
-
-<<<<<<< HEAD
-                                </ul> --}}
-                            </li>
-=======
                                 </ul>
                             </li> --}}
->>>>>>> 386cbf05e4b5eb04db14ae2c26c4a8d31d9e7330
                             <li class="user-profile header-notification">
                                 <a href="#!" class="waves-effect waves-light">
                                     <img src="{{ url('assets/images/faq_man.png') }}" class="img-radius"
@@ -304,11 +298,7 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-<<<<<<< HEAD
-                                
-=======
                                 @if(auth()->user()->hasAnyRole('BKA') or auth()->user()->can('Download'))
->>>>>>> 386cbf05e4b5eb04db14ae2c26c4a8d31d9e7330
                                 <li class="{{ request()->routeIs('downloads.*') ? 'active' : '' }}">
                                     <a href="{{ route('downloads.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-download"></i><b>FC</b></span>
@@ -338,12 +328,6 @@
                                 </li>
                                 
                             </ul>
-<<<<<<< HEAD
-                            {{-- @role('admin') --}}
-=======
-
-                            
->>>>>>> 386cbf05e4b5eb04db14ae2c26c4a8d31d9e7330
                             <div class="pcoded-navigation-label" data-i18n="nav.category.other">Setting</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu {{ request()->routeIs(['roles.*', 'permissions.*','users.*']) ? 'active pcoded-trigger' : '' }}">
