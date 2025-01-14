@@ -40,24 +40,24 @@ Auth::routes(['register' => false]);
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resource('categories', CategoryController::class)->except('show');
-    Route::resource('posts', PostController::class);
-    Route::resource('scholarships', ScholarshipController::class);
-    Route::resource('downloads', DownloadController::class)->middleware('role_or_permission:BKA|Download');
-    Route::resource('monevs', MonevController::class);
-    Route::resource('achievements', AchievementController::class);
+    Route::resource('categories', CategoryController::class)->except('show')->middleware('role:admin');
+    Route::resource('posts', PostController::class)->middleware('permission:post');
+    Route::resource('scholarships', ScholarshipController::class)->middleware('permission:beasiswa');
+    Route::resource('downloads', DownloadController::class)->middleware('permission:download');
+    Route::resource('monevs', MonevController::class)->middleware('role:admin');
+    Route::resource('achievements', AchievementController::class)->middleware('permission:prestasi');
     Route::get('achievement/export', [AchievementController::class, 'export'])->name('achievements.export');
-    Route::resource('organizations', OrganizationController::class)->only('index', 'edit', 'update');
+    Route::resource('organizations', OrganizationController::class)->only('index', 'edit', 'update')->middleware('permission:organisasi');
 
-    Route::resource('roles', RoleController::class)->except('show');
-    Route::resource('permissions', PermissionController::class)->except('show');
+    Route::resource('roles', RoleController::class)->except('show')->middleware('permission:setting');
+    Route::resource('permissions', PermissionController::class)->except('show')->middleware('permission:setting');
 
-    Route::get('roles/{role}/permissions', [RoleController::class, 'editPermissions'])->name('roles.permissions.edit');
-    Route::put('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('roles.permissions.update');
+    Route::get('roles/{role}/permissions', [RoleController::class, 'editPermissions'])->name('roles.permissions.edit')->middleware('permission:setting');
+    Route::put('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('roles.permissions.update')->middleware('permission:setting');
 
-    Route::resource('users', UserController::class);
-    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::resource('users', UserController::class)->middleware('permission:setting');
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware('permission:setting');
+    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update')->middleware('permission:setting');
 });
 
 Route::get('/', [FrontController::class, 'index'])->name('beranda');

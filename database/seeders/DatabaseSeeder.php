@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         \App\Models\User::factory()->create([
-            'name' => 'Rendy',
+            'name' => 'Admin',
             'email' => 'rendy@gmail.com',
             'password' => BCRYPT('12345'),
         ]);
@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             // AchievementsTableSeeder::class,
             // PostSeeder::class,
             OrganizationSeeder::class,
+            RoleSeeder::class,
+            PermissionSeeder::class,
         ]);
     }
 }

@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="index.html">
+                        <a href="/" target="_blank">
                             <img class="img-fluid" style="max-width: 190px;" src="{{ url('assets/images/logobackend.png') }}" alt="Theme-Logo" />
                         </a>
                         
@@ -250,6 +250,7 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
+                                @can('post')
                                 <li
                                     class="pcoded-hasmenu {{ request()->routeIs(['categories.*', 'posts.*']) ? 'active pcoded-trigger' : '' }}">
                                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -258,6 +259,7 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
+                                        @role('admin')
                                         <li class="{{ request()->routeIs('categories.*') ? 'active' : '' }}">
                                             <a href="{{ route('categories.index') }}"
                                                 class="waves-effect waves-dark">
@@ -267,30 +269,37 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+                                        @endrole
+
+                                        @can('post')
                                         <li class="{{ request()->routeIs('posts.*') ? 'active' : '' }} ">
                                             <a href="{{ route('posts.index') }}" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.breadcrumbs">Post</span>
+                                                data-i18n="nav.basic-components.breadcrumbs">Post</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+                                        @endcan
                                     </ul>
                                 </li>
-
-
+                                @endcan
+                                @can('organisasi')
+                                    
                                 <li class="{{ request()->routeIs('organizations.*') ? 'active' : '' }}">
                                     <a href="{{ route('organizations.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-target"></i><b>FC</b></span>
                                         <span class="pcoded-mtext"
-                                            data-i18n="nav.form-components.main">Organisasi</span>
+                                        data-i18n="nav.form-components.main">Organisasi</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
+                                @endcan
 
 
 
-                                
+                                @can('monev')
+                                    
                                 <li class="{{ request()->routeIs('monevs.*') ? 'active' : '' }}">
                                     <a href="{{ route('monevs.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-agenda"></i><b>FC</b></span>
@@ -298,36 +307,46 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                @if(auth()->user()->hasAnyRole('BKA') or auth()->user()->can('Download'))
+                                @endcan
+
+                                {{-- @if(auth()->user()->hasAnyRole('BKA') or auth()->user()->can('Download')) --}}
+                                @can('download')
+                                    
                                 <li class="{{ request()->routeIs('downloads.*') ? 'active' : '' }}">
                                     <a href="{{ route('downloads.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-download"></i><b>FC</b></span>
                                         <span class="pcoded-mtext"
-                                            data-i18n="nav.form-components.main">Download</span>
+                                        data-i18n="nav.form-components.main">Download</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                @endif
-                                
+                                @endcan
+                                {{-- @endif --}}
+
+                                @can('prestasi')
                                 <li class="{{ request()->routeIs('achievements.*') ? 'active' : '' }}">
                                     <a href="{{ route('achievements.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-cup"></i><b>FC</b></span>
                                         <span class="pcoded-mtext"
-                                            data-i18n="nav.form-components.main">Prestasi</span>
+                                        data-i18n="nav.form-components.main">Prestasi</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
+                                @endcan
                                 
+                                @can('beasiswa')
                                 <li class="{{ request()->routeIs('scholarships.*') ? 'active' : '' }}">
                                     <a href="{{ route('scholarships.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-medall"></i><b>FC</b></span>
                                         <span class="pcoded-mtext"
-                                            data-i18n="nav.form-components.main">Beasiswa</span>
+                                        data-i18n="nav.form-components.main">Beasiswa</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                
+                                @endcan
                             </ul>
+
+                            @role('admin')
                             <div class="pcoded-navigation-label" data-i18n="nav.category.other">Setting</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu {{ request()->routeIs(['roles.*', 'permissions.*','users.*']) ? 'active pcoded-trigger' : '' }}">
@@ -385,7 +404,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                            
+                            @endrole
                         </div>
                     </nav>
                     @yield('content')
